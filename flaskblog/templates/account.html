@@ -1,0 +1,100 @@
+{% extends 'layout.html'%} {% block content %}
+<div class="content-section">
+  <div class="card-group">
+    <div class="card">
+      <div class="card-header">Account Update Form</div>
+      <div class="card-body">
+        <form method="post" action="" enctype="multipart/form-data">
+          {{ form.hidden_tag() }}
+          <div class="form-group row">
+            {{ form.firstname.label(class_="col-md-3 col-form-label
+            text-md-right")}} {% if form.firstname.errors %} {{
+            form.firstname(class="form-control col-md-5 is-invalid")}}
+            <div class="invaild-feedback col-md-3 text-danger">
+              {% for error in form.firstname.errors %}
+              <small>{{ error }}</small>
+              {% endfor %}
+            </div>
+            {% else %} {{ form.firstname(class_="form-control col-md-5")}}{%
+            endif %}
+          </div>
+          <div class="form-group row">
+            {{form.lastname.label(class_="col-md-3 col-form-label
+            text-md-right")}} {% if form.lastname.errors %}
+            {{form.lastname(class="form-control col-md-5 is-invalid")}}
+            <div class="invaild-feedback col-md-3 text-danger">
+              {% for error in form.lastname.errors %}
+              <small>{{ error }}</small>
+              {% endfor %}
+            </div>
+            {% else %} {{ form.lastname(class_="form-control col-md-5")}}
+            {%endif %}
+          </div>
+          <div class="form-group row">
+            {{ form.username.label(class_="col-md-3 col-form-label
+            text-md-right")}} {% if form.username.errors %}
+            {{form.username(class="form-control col-md-5 is-invalid")}}
+            <div class="invaild-feedback col-md-3 text-danger">
+              {% for error in form.username.errors %}
+              <small>{{ error }}</small>
+              {% endfor %}
+            </div>
+            {% else %} {{ form.username(class_="form-control col-md-5")}} {%
+            endif %}
+          </div>
+          <div class="form-group row">
+            {{ form.email.label(class_="col-md-3 col-form-label
+            text-md-right")}} {% if form.email.errors %}
+            {{form.email(class="form-control col-md-5 is-invalid")}}
+            <div class="invaild-feedback col-md-3 text-danger">
+              {% for error in form.email.errors %}
+              <small>{{ error }}</small>
+              {% endfor %}
+            </div>
+            {% else %} {{ form.email(class_="form-control col-md-5")}} {% endif
+            %}
+          </div>
+          <div class="form-group row">
+            {{ form.picture.label(class_="col-md-3 col-form-label
+            text-md-right") }} {{ form.picture(class="form-control-item") }} {%
+            if form.picture.errors %} {% for error in form.picture.errors %}
+            <small class="text-danger">{{ error }}</small> <br />
+            {% endfor %} {% endif %}
+          </div>
+          <div class="form-group row">
+            <div class="col-md-8 offset-md-3">
+              {{ form.submit(class="btn btn-primary")}} Already have an Account?
+              <a class="btn-link" href="{{url_for('login')}}"> Sign in</a>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="card">
+        <div class="card-header">User Details</div>
+        <div class="media justify-content-center">
+          <img
+            class="rounded-circle mt-2"
+            src="{{ image_file }}"
+            alt="Card image cap"
+          />
+        </div>
+        <div class="card-body">
+          <p class="card-text">
+            First Name : <br />{{ current_user.firstname }}
+          </p>
+          <p class="card-text">Last Name : <br />{{ current_user.lastname }}</p>
+          <p class="card-text">Username : <br />{{ current_user.username }}</p>
+          <p class="card-text">
+            E-mail Address : <br />{{ current_user.email }}
+          </p>
+          <p class="card-text">
+            <small class="text-muted">Last updated 3 mins ago</small>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock content%}

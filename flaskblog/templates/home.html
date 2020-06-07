@@ -1,0 +1,118 @@
+{% extends 'layout.html'%} {% block content %}
+<div class="container">
+  <div class="row justify-content-center">
+    <div class="col-md-13">
+      <div class="card">
+        <div class="card-header">
+          <div class="d-flex align-items-center">
+            <div class="starter-template align-items-center">
+              <h1>
+                Intelligent Assistance for Guiding to Improve The IELTS Exams
+              </h1>
+              <p class="lead">
+                Use this document as a way to quickly start any new project.<br />
+                All you get is this text and a mostly barebones HTML document.
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="row">
+            <div class="col-sm-6 col-md-3">
+              <div class="thumbnail">
+                <div class="caption">
+                  <h3>Writing Exams</h3>
+                  <p>
+                    Try out our machine learning code and get a good experience.
+                  </p>
+                  <p>
+                    <a href="/writing" class="btn btn-primary" role="button"
+                      >Go to Writing Exams</a
+                    >
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-6 col-md-3">
+              <div class="thumbnail">
+                <div class="caption">
+                  <h3>Reading Exams</h3>
+                  <p>
+                    Try out our machine learning code and get a good experience.
+                  </p>
+                  <p>
+                    <a href="/reading" class="btn btn-primary" role="button"
+                      >Go to Reading Exams</a
+                    >
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-6 col-md-3">
+              <div class="thumbnail">
+                <div class="caption">
+                  <h3>Listening Exams</h3>
+                  <p>
+                    Try out our machine learning code and get a good experience.
+                  </p>
+                  <p>
+                    <a href="/listening" class="btn btn-primary" role="button"
+                      >Go to Listening Exams</a
+                    >
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-6 col-md-3">
+              <div class="thumbnail">
+                <div class="caption">
+                  <h3>Speaking Exams</h3>
+                  <p>
+                    Try out our machine learning code and get a good experience.
+                  </p>
+                  <p>
+                    <a href="/speaking" class="btn btn-primary" role="button"
+                      >Go to Speaking Exams</a
+                    >
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <br />
+      {% for post in posts %}
+      <div class="card mb-2" style="max-width: 540px;">
+        <div class="row no-gutters">
+          <div class="text-center">
+            <img
+              class="rounded-circle mt-4 ml-3"
+              src="{{ url_for('static', filename='profile_pics/' + post.author.image_file) }}"
+            />
+          </div>
+          <div class="col-md-6">
+            <div class="card-body">
+              <h5 class="card-title">
+                <a
+                  class="article-title"
+                  href="{{ url_for('post', post_id= post.id )}}"
+                  >{{ post.title }}</a
+                >
+              </h5>
+              <p class="card-text">{{ post.content }}</p>
+              <p class="card-text">
+                <small class="text-muted"
+                  >{{ post.author.username }} - {{
+                  post.date_posted.strftime('%Y-%m-%d') }}</small
+                >
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+{% endblock content%}
