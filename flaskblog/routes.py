@@ -3,8 +3,8 @@ import os
 from PIL import Image
 from flask import render_template, url_for, flash, redirect, request, abort
 from flaskblog import app, db, bcrypt
-from flaskblog.forms import RegistrationForm, LoginForm, UpdateAccountForm, PostForm
-from flaskblog.models import User, Post
+from flaskblog.forms import RegistrationForm, LoginForm, UpdateAccountForm, PostForm, QuestionpaperForm
+from flaskblog.models import User, Post, Questionpaper
 from flask_login import login_user, current_user, logout_user, login_required
 
 
@@ -145,21 +145,43 @@ def delete_post(post_id):
     return redirect(url_for('home'))
 
 
-@app.route("/questionspaper", methods=['GET', 'POST'])
-@login_required
-def questionspaper(question_type):
-    return null
+@app.route("/writing")
+def writing():
+    questions = Questionpaper.query.filter(
+        Questionpaper.questiontype.endswith('writing')).all()
+    return render_template('writing.html', questions=questions)
 
 
-@app.route("/questionspaper/new", methods=['GET', 'POST'])
+@app.route("/speaking")
+def speaking():
+    questions = Questionpaper.query.filter(
+        Questionpaper.questiontype.endswith('speaking')).all()
+    return render_template('speaking.html', questions=questions)
+
+
+@app.route("/listening")
+def listening():
+    questions = Questionpaper.query.filter(
+        Questionpaper.questiontype.endswith('listening')).all()
+    return render_template('listening.html', questions=questions)
+
+
+@app.route("/reading")
+def reading():
+    questions = Questionpaper.query.filter(
+        Questionpaper.questiontype.endswith('reading')).all()
+    return render_template('reading.html', questions=questions)
+
+
+@app.route("/writing/new", methods=['GET', 'POST'])
 @login_required
 def new_question():
-    form = PostForm()
+    form = QuestionpaperForm()
     if form.validate_on_submit():
-        post = Post(title=form.title.data,
-                    content=form.content.data, author=current_user)
-        db.session.add(post)
+        questionpaper = Questionpaper(title=form.title.data, questions=form.question.data, duration=form.duration.data,
+                                      questiontype=form.questionpapertype.data, creator=current_user)
+        db.session.add(questionpaper)
         db.session.commit()
-        flash('Your post has been Created!', 'success')
-        return redirect(url_for('home'))
-    return render_template('create_post.html', title='New Post', form=form, legend='New Post')
+        flash('Your Question Paper has been Created!', 'success')
+        return redirect(url_for('writing'))
+    return render_template('create_questionpaper.html', form=form, legend='Question New Paper')

@@ -1,15 +1,15 @@
 {% extends 'layout.html'%} {% block content %}
-<div class="container">
+<div class="container mt-3">
   <div class="row justify-content-center">
-    <div class="col-md-13">
+    <div class="col-md-10">
       <div class="card">
         <div class="card-header">
           <div class="d-flex align-items-center">
             <div class="starter-template align-items-center">
-              <h1>
+              <h3>
                 Intelligent Assistance for Guiding to Improve The IELTS Exams
-              </h1>
-              <p class="lead">
+              </h3>
+              <p>
                 Use this document as a way to quickly start any new project.<br />
                 All you get is this text and a mostly barebones HTML document.
               </p>
@@ -21,7 +21,7 @@
             <div class="col-sm-6 col-md-3">
               <div class="thumbnail">
                 <div class="caption">
-                  <h3>Writing Exams</h3>
+                  <h5>Writing Exams</h5>
                   <p>
                     Try out our machine learning code and get a good experience.
                   </p>
@@ -36,7 +36,7 @@
             <div class="col-sm-6 col-md-3">
               <div class="thumbnail">
                 <div class="caption">
-                  <h3>Reading Exams</h3>
+                  <h5>Reading Exams</h5>
                   <p>
                     Try out our machine learning code and get a good experience.
                   </p>
@@ -51,7 +51,7 @@
             <div class="col-sm-6 col-md-3">
               <div class="thumbnail">
                 <div class="caption">
-                  <h3>Listening Exams</h3>
+                  <h5>Listening Exams</h5>
                   <p>
                     Try out our machine learning code and get a good experience.
                   </p>
@@ -66,7 +66,7 @@
             <div class="col-sm-6 col-md-3">
               <div class="thumbnail">
                 <div class="caption">
-                  <h3>Speaking Exams</h3>
+                  <h5>Speaking Exams</h5>
                   <p>
                     Try out our machine learning code and get a good experience.
                   </p>
@@ -81,9 +81,8 @@
           </div>
         </div>
       </div>
-      <br />
       {% for post in posts %}
-      <div class="card mb-2" style="max-width: 540px;">
+      <div class="card mb-3 mt-3">
         <div class="row no-gutters">
           <div class="text-center">
             <img

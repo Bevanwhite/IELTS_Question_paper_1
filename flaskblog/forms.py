@@ -1,9 +1,9 @@
 from flask_wtf import FlaskForm
 from flask_wtf.file import FileField, FileAllowed
 from flask_login import current_user
-from wtforms import StringField, PasswordField, SubmitField, BooleanField, TextAreaField, IntegerField
+from wtforms import StringField, PasswordField, SubmitField, BooleanField, TextAreaField, IntegerField, FloatField, SelectField
 from wtforms.validators import DataRequired, Length, Email, EqualTo, ValidationError
-from flaskblog.models import User, Post, Questions, Questionspaper, Questionstype
+from flaskblog.models import User, Post, Questionpaper
 
 
 class RegistrationForm(FlaskForm):
@@ -87,14 +87,12 @@ class PostForm(FlaskForm):
     submit = SubmitField('Post')
 
 
-class QuestionstypeForm(FlaskForm):
-    type = StringField('Title', validators=[
-                       DataRequired(), Length(min=4, max=20)])
-    submit = SubmitField('Submit')
+class QuestionpaperForm(FlaskForm):
 
-
-class QuestionspaperForm(FlaskForm):
-    question_paper_title = StringField('Question Paper Title', validators=[
-        DataRequired(), Length(min=4, max=30)])
-    question_size = IntegerField(validators=[
-        DataRequired(), Length(min=1, max=2)])
+    title = StringField('Question Paper Title', validators=[DataRequired()])
+    question = IntegerField('How many Questions', validators=[DataRequired()])
+    questionpapertype = SelectField('Question Paper type', choices=[
+        ('writing', 'Writing'), ('reading', 'Reading'), ('listening', 'Listening'), ('speaking', 'Speaking')],
+        default=1, coerce=str)
+    duration = FloatField('Duration', validators=[DataRequired()])
+    submit = SubmitField('Create a Question Paper')

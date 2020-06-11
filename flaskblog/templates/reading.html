@@ -1,0 +1,46 @@
+{% extends 'layout.html' %} {% block content %}
+<div class="row justify-content-center mt-3">
+  <div class="col-md-10">
+    <div class="card">
+      <div class="card-body">
+        New Reading Question Paper
+        <div class="text-right">
+          <a
+            type="button"
+            class="btn btn-outline-primary btn-sm"
+            href="/questionpaper/new"
+          >
+            New Reading Question Paper
+          </a>
+        </div>
+      </div>
+    </div>
+    {% for question in questions %}
+    <div class="card mb-3 mt-3">
+      <div class="row no-gutters">
+        <div class="text-center">
+          <img
+            class="rounded-circle mt-4 ml-3"
+            src="{{ url_for('static', filename='profile_pics/' + question.creator.image_file) }}"
+          />
+        </div>
+        <div class="col-md-6">
+          <div class="card-body">
+            <h5 class="card-title">
+              <a class="article-title" href="#">{{ question.title }}</a>
+            </h5>
+            <p class="card-text">{{ question.duration }}</p>
+            <p class="card-text">
+              <small class="text-muted"
+                >{{ question.creator.username }} - {{
+                question.date_posted.strftime('%Y-%m-%d') }}</small
+              >
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+{% endblock content %}
