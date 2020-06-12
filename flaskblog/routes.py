@@ -3,8 +3,8 @@ import os
 from PIL import Image
 from flask import render_template, url_for, flash, redirect, request, abort
 from flaskblog import app, db, bcrypt
-from flaskblog.forms import RegistrationForm, LoginForm, UpdateAccountForm, PostForm, QuestionpaperForm
-from flaskblog.models import User, Post, Questionpaper
+from flaskblog.forms import RegistrationForm, LoginForm, UpdateAccountForm, PostForm, QuestionpaperForm, WritingpaperFrom
+from flaskblog.models import User, Post, Questionpaper, Writingpaper
 from flask_login import login_user, current_user, logout_user, login_required
 
 
@@ -147,16 +147,33 @@ def delete_post(post_id):
 
 @app.route("/writing")
 def writing():
-    questions = Questionpaper.query.filter(
-        Questionpaper.questiontype.endswith('writing')).all()
-    return render_template('writing.html', questions=questions)
+    writingpapers = Writingpaper.query.all()
+    return render_template('writing.html', writingpapers=writingpapers)
+
+
+@app.route("/writing/new", methods=['GET', 'POST'])
+@login_required
+def new_writingpaper():
+    form = WritingpaperFrom()
+    if form.validate_on_submit():
+        writingpaper = Writingpaper(title=form.title.data, task01=form.task01.data, task01_img=form.task01_img.data,
+                                    task02=form.task02.data, task02_img=form.task02_img.data, wcreator=current_user)
+        db.session.add(writingpaper)
+        db.session.commit()
+        flash('Your Writing Paper has been Created!', 'success')
+        return redirect(url_for('writing'))
+    return render_template('create_writing.html', title='Writing Paper', form=form, legend='Writing Paper')
+
+
+@app.route("/writing/<int:writing_id>")
+def show_writing(writing_id):
+    writingpaper = Writingpaper.query.get_or_404(writing_id)
+    return render_template('writing_paper.html', title=writingpaper.title, writingpaper=writingpaper)
 
 
 @app.route("/speaking")
 def speaking():
-    questions = Questionpaper.query.filter(
-        Questionpaper.questiontype.endswith('speaking')).all()
-    return render_template('speaking.html', questions=questions)
+    return render_template('speaking.html')
 
 
 @app.route("/listening")
@@ -173,7 +190,7 @@ def reading():
     return render_template('reading.html', questions=questions)
 
 
-@app.route("/writing/new", methods=['GET', 'POST'])
+@app.route("/questionpaper/new", methods=['GET', 'POST'])
 @login_required
 def new_question():
     form = QuestionpaperForm()

@@ -1,9 +1,9 @@
 {% extends 'layout.html' %} {% block content %}
 <div class="row justify-content-center mt-3">
   <div class="col-md-10">
-    <div class="card">
+    <div class="card mb-3">
       <div class="card-body">
-        New Writing Question Paper
+        New Writing Question Paper {% if current_user.is_authenticated %}
         <div class="text-right">
           <a
             type="button"
@@ -13,32 +13,23 @@
             New Writing Question Paper
           </a>
         </div>
+        {% endif %}
       </div>
     </div>
-    {% for question in questions %}
-    <div class="card mb-3 mt-3">
-      <div class="row no-gutters">
-        <div class="text-center">
-          <img
-            class="rounded-circle mt-4 ml-3"
-            src="{{ url_for('static', filename='profile_pics/' + question.creator.image_file) }}"
-          />
+    {% for writingpaper in writingpapers %}
+    <div class="list-group">
+      <a
+        href="{{ url_for('show_writing', writing_id= writingpaper.id )}}"
+        class="list-group-item list-group-item-action"
+      >
+        <div class="d-flex w-100 justify-content-between">
+          <h5 class="mb-1">{{ writingpaper.title }}</h5>
+          <small
+            >{{ writingpaper.wcreator.username }} - {{
+            writingpaper.date_posted.strftime('%Y-%m-%d') }}</small
+          >
         </div>
-        <div class="col-md-6">
-          <div class="card-body">
-            <h5 class="card-title">
-              <a class="article-title" href="#">{{ question.title }}</a>
-            </h5>
-            <p class="card-text">{{ question.duration }}</p>
-            <p class="card-text">
-              <small class="text-muted"
-                >{{ question.creator.username }} - {{
-                question.date_posted.strftime('%Y-%m-%d') }}</small
-              >
-            </p>
-          </div>
-        </div>
-      </div>
+      </a>
     </div>
     {% endfor %}
   </div>

@@ -21,6 +21,10 @@ class User(db.Model,  UserMixin):
     post = db.relationship('Post', backref='author', lazy=True)
     questionpaper = db.relationship(
         'Questionpaper', backref='creator', lazy=True)
+    writingpaper = db.relationship(
+        'Writingpaper', backref='wcreator', lazy=True)
+    writinganswer = db.relationship(
+        'Writingpaperanswer', backref='wcandidate', lazy=True)
 
     def __repr__(self):
         return f"User('{self.username}','{self.email}','{self.image_file}')"
@@ -40,7 +44,7 @@ class Post(db.Model):
 
 class Questionpaper(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    title = db.Column(db.String(100), nullable=False)
+    title = db.Column(db.String(100), unique=True, nullable=False)
     questions = db.Column(db.Integer, nullable=False)
     questiontype = db.Column(db.String(50), nullable=False)
     duration = db.Column(db.Float, nullable=False)
@@ -50,3 +54,34 @@ class Questionpaper(db.Model):
 
     def __repr__(self):
         return f"Questionpaper('{self.title}','{self.questions}')"
+
+
+class Writingpaper(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.String(300), unique=True, nullable=False)
+    task01 = db.Column(db.String(600), nullable=False)
+    task01_img = db.Column(db.String(20), nullable=True)
+    task02 = db.Column(db.String(600), nullable=False)
+    task02_img = db.Column(db.String(20), nullable=True)
+    date_posted = db.Column(db.DateTime, nullable=False,
+                            default=datetime.utcnow)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    answer = db.relationship(
+        'Writingpaperanswer', backref='candidate', lazy=True)
+
+    def __repr__(self):
+        return f"Writingpaper('{self.id}','{self.title}')"
+
+
+class Writingpaperanswer(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    pid = db.Column(db.Integer, db.ForeignKey(
+        'writingpaper.id'), nullable=False)
+    task01_answer = db.Column(db.String(600), nullable=False)
+    task02_answer = db.Column(db.String(600), nullable=False)
+    date_posted = db.Column(db.DateTime, nullable=False,
+                            default=datetime.utcnow)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+
+    def __repr__(self):
+        return f"Writingpaperanswer('{self.id}','{self.pid}')"
