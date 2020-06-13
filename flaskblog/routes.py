@@ -151,23 +151,52 @@ def writing():
     return render_template('writing.html', writingpapers=writingpapers)
 
 
+def paper_picture(form_picture):
+    random_hex = secrets.token_hex(8)
+    _, f_ext = os.path.splitext(form_picture.filename)
+    picture_fn = random_hex + f_ext
+    picture_path = os.path.join(
+        app.root_path, 'static/writingpaper', picture_fn)
+    output_size = (400, 500)
+    i = Image.open(form_picture)
+    i.thumbnail(output_size)
+    i.save(picture_path)
+    return picture_fn
+
+
 @app.route("/writing/new", methods=['GET', 'POST'])
 @login_required
 def new_writingpaper():
     form = WritingpaperFrom()
     if form.validate_on_submit():
-        writingpaper = Writingpaper(title=form.title.data, task01=form.task01.data, task01_img=form.task01_img.data,
-                                    task02=form.task02.data, task02_img=form.task02_img.data, wcreator=current_user)
+        if form.task01_img.data and form.task02_img.data:
+            task01_file = paper_picture(form.task01_img.data)
+            task02_file = paper_picture(form.task02_img.data)
+            writingpaper = Writingpaper(title=form.title.data, task01=form.task01.data, task01_img=task01_file,
+                                        task02=form.task02.data, task02_img=task02_file, wcreator=current_user)
+        elif form.task01_img.data:
+            task01_file = paper_picture(form.task01_img.data)
+            writingpaper = Writingpaper(title=form.title.data, task01=form.task01.data, task01_img=task01_file,
+                                        task02=form.task02.data, task02_img=form.task02_img.data, wcreator=current_user)
+        elif form.task02_img.data:
+            task02_file = paper_picture(form.task02_img.data)
+            writingpaper = Writingpaper(title=form.title.data, task01=form.task01.data, task01_img=form.task02.data,
+                                        task02=form.task02.data, task02_img=task02_file, wcreator=current_user)
+        else:
+            writingpaper = Writingpaper(title=form.title.data, task01=form.task01.data, task01_img=form.task01.data,
+                                        task02=form.task02.data, task02_img=form.task02_img.data, wcreator=current_user)
         db.session.add(writingpaper)
         db.session.commit()
         flash('Your Writing Paper has been Created!', 'success')
         return redirect(url_for('writing'))
+
     return render_template('create_writing.html', title='Writing Paper', form=form, legend='Writing Paper')
 
 
 @app.route("/writing/<int:writing_id>")
 def show_writing(writing_id):
     writingpaper = Writingpaper.query.get_or_404(writing_id)
+
     return render_template('writing_paper.html', title=writingpaper.title, writingpaper=writingpaper)
 
 
