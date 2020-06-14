@@ -1,0 +1,17 @@
+class Writingpaperanswer(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    pid = db.Column(db.Integer, db.ForeignKey(
+        'writingpaper.id'), nullable=False)
+    task01_answer = db.Column(db.String(600), nullable=False)
+    task02_answer = db.Column(db.String(600), nullable=False)
+    date_posted = db.Column(db.DateTime, nullable=False,
+                            default=datetime.utcnow)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+
+    def __repr__(self):
+        return f"Writingpaperanswer('{self.id}','{self.pid}')"
+
+
+    answer = db.relationship(
+        'Writingpaperanswer', backref='candidate', lazy=True)
+   

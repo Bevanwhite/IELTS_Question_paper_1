@@ -1,1 +1,24 @@
-{% extends 'layout.html' %} {% block content %} {% endblock content %}
+{% extends 'layout.html' %} {% block content %}
+<div class="row justify-content-center mt-3">
+  <div class="col-md-10">
+    <div class="card">
+      <div class="card-header">
+        {{ writingpaper.title }}
+      </div>
+      <div class="card-body">
+        <h5 class="card-title">{{ writingpaper.task01 }}</h5>
+        <img
+          src="{{ url_for('static', filename='writingpaper/' + writingpaper.task01_img) }}"
+          class="img-fluid"
+          alt="..."
+        />
+        <p class="card-text"></p>
+      </div>
+      <div class="card-footer text-muted text-right">
+        {{ writingpaper.date_posted.strftime('%Y-%m-%d') }}
+        <a href="#" class="btn btn-primary">Next Page</a>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock content %}
