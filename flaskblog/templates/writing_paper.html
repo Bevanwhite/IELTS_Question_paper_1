@@ -1,24 +1,60 @@
 {% extends 'layout.html' %} {% block content %}
-<div class="row justify-content-center mt-3">
-  <div class="col-md-10">
-    <div class="card">
-      <div class="card-header">
-        {{ writingpaper.title }}
-      </div>
-      <div class="card-body">
-        <h5 class="card-title">{{ writingpaper.task01 }}</h5>
-        <img
-          src="{{ url_for('static', filename='writingpaper/' + writingpaper.task01_img) }}"
-          class="img-fluid"
-          alt="..."
-        />
-        <p class="card-text"></p>
-      </div>
-      <div class="card-footer text-muted text-right">
-        {{ writingpaper.date_posted.strftime('%Y-%m-%d') }}
-        <a href="#" class="btn btn-primary">Next Page</a>
-      </div>
+<div class="card mt-3 mb-3">
+  <div class="card-header">
+    {{ writingpaper.title }} Question 01
+  </div>
+  <div class="card-body">
+    <h5 class="card-title">{{ writingpaper.task01 }}</h5>
+    {% if writingpaper.task01_img %}
+    <img
+      src="{{ url_for('static', filename='writingpaper/' + writingpaper.task01_img) }}"
+      class="img-fluid float-right"
+      alt="..."
+    />
+    {% endif %} {{ form.task01_answer.label(class_="col-form-label
+    text-md-right")}} {% if form.task01_answer.errors %}
+    {{form.task01_answer(class="form-control col-md-7 is-invalid" , rows=10)}}
+    <div class="invaild-feedback col-md-3 text-danger">
+      {% for error in form.task01_answer.errors %}
+      <small>{{ error }}</small>
+      {% endfor %}
     </div>
+    {% else %} {{ form.task01_answer(class_="form-control col-md-7", rows=10)}}
+    {% endif %}
+  </div>
+  <div class="card-footer text-muted text-right">
+    {{ writingpaper.date_posted.strftime('%Y-%m-%d') }}
+    <a href="#" class="btn btn-primary">save the answer</a>
   </div>
 </div>
+
+<div class="card mt-3 mb-3">
+  <div class="card-header">
+    {{ writingpaper.title }} Question 02
+  </div>
+  <div class="card-body">
+    <h5 class="card-title">{{ writingpaper.task02 }}</h5>
+    {% if writingpaper.task02_img %}
+    <img
+      src="{{ url_for('static', filename='writingpaper/' + writingpaper.task02_img) }}"
+      class="img-fluid float-right"
+      alt="..."
+    />
+    {% endif %} {{ form.task02_answer.label(class_="col-form-label
+    text-md-right")}} {% if form.task02_answer.errors %}
+    {{form.task02_answer(class="form-control col-md-7 is-invalid" , rows=10)}}
+    <div class="invaild-feedback col-md-3 text-danger">
+      {% for error in form.task02_answer.errors %}
+      <small>{{ error }}</small>
+      {% endfor %}
+    </div>
+    {% else %} {{ form.task02_answer(class_="form-control col-md-7", rows=10)}}
+    {% endif %}
+  </div>
+  <div class="card-footer text-muted text-right">
+    {{ writingpaper.date_posted.strftime('%Y-%m-%d') }}
+    <a href="#" class="btn btn-primary">save the answer</a>
+  </div>
+</div>
+
 {% endblock content %}
