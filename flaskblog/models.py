@@ -78,7 +78,6 @@ class Writingpaperanswer(db.Model):
     pid = db.Column(db.Integer, db.ForeignKey(
         'writingpaper.id'), nullable=False)
     task01_answer = db.Column(db.String(600), nullable=False)
-    task02_answer = db.Column(db.String(600), nullable=False)
     date_posted = db.Column(db.DateTime, nullable=False,
                             default=datetime.utcnow)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)

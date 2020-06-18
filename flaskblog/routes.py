@@ -3,7 +3,8 @@ import os
 from PIL import Image
 from flask import render_template, url_for, flash, redirect, request, abort
 from flaskblog import app, db, bcrypt
-from flaskblog.forms import RegistrationForm, LoginForm, UpdateAccountForm, PostForm, QuestionpaperForm, WritingpaperFrom
+from flaskblog.forms import RegistrationForm, LoginForm, UpdateAccountForm, PostForm, QuestionpaperForm
+from flaskblog.forms import WritingpaperForm, WritingpaperanswerFrom
 from flaskblog.models import User, Post, Questionpaper, Writingpaper
 from flask_login import login_user, current_user, logout_user, login_required
 
@@ -11,7 +12,8 @@ from flask_login import login_user, current_user, logout_user, login_required
 @app.route("/")
 @app.route("/home")
 def home():
-    posts = Post.query.all()
+    page = request.args.get('page', 1, type=int)
+    posts = Post.query.paginate(page=page, per_page=5)
     return render_template('home.html', posts=posts)
 
 
@@ -157,7 +159,7 @@ def paper_picture(form_picture):
     picture_fn = random_hex + f_ext
     picture_path = os.path.join(
         app.root_path, 'static/writingpaper', picture_fn)
-    output_size = (400, 500)
+    output_size = (350, 450)
     i = Image.open(form_picture)
     i.thumbnail(output_size)
     i.save(picture_path)
@@ -167,7 +169,7 @@ def paper_picture(form_picture):
 @app.route("/writing/new", methods=['GET', 'POST'])
 @login_required
 def new_writingpaper():
-    form = WritingpaperFrom()
+    form = WritingpaperForm()
     if form.validate_on_submit():
         if form.task01_img.data and form.task02_img.data:
             task01_file = paper_picture(form.task01_img.data)
@@ -195,9 +197,10 @@ def new_writingpaper():
 
 @app.route("/writing/<int:writing_id>")
 def show_writing(writing_id):
+    form = WritingpaperanswerFrom()
     writingpaper = Writingpaper.query.get_or_404(writing_id)
 
-    return render_template('writing_paper.html', title=writingpaper.title, writingpaper=writingpaper)
+    return render_template('writing_paper.html', title=writingpaper.title, writingpaper=writingpaper, form=form)
 
 
 @app.route("/speaking")

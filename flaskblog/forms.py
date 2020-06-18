@@ -97,7 +97,7 @@ class QuestionpaperForm(FlaskForm):
     submit = SubmitField('Create a Question Paper')
 
 
-class WritingpaperFrom(FlaskForm):
+class WritingpaperForm(FlaskForm):
     title = StringField('Question Paper Title',
                         validators=[DataRequired()])
     task01 = TextAreaField('Question 01', validators=[DataRequired()])
@@ -113,3 +113,9 @@ class WritingpaperFrom(FlaskForm):
         if writingpaper:
             raise ValidationError(
                 'This title is taken. Please choose a diffrent one')
+
+
+class WritingpaperanswerFrom(FlaskForm):
+    task01_answer = TextAreaField('Question 01', validators=[DataRequired()])
+    task02_answer = TextAreaField('Question 01', validators=[DataRequired()])
+    submit = SubmitField('Save Your answer')
