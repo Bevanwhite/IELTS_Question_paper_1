@@ -115,7 +115,26 @@ class WritingpaperForm(FlaskForm):
                 'This title is taken. Please choose a diffrent one')
 
 
-class WritingpaperanswerFrom(FlaskForm):
-    task01_answer = TextAreaField('Question 01', validators=[DataRequired()])
-    task02_answer = TextAreaField('Question 01', validators=[DataRequired()])
+class WritingpaperanswerForm(FlaskForm):
+    task01_answer = TextAreaField('Answer 01', validators=[DataRequired()])
+    task02_answer = TextAreaField('Answer 02', validators=[DataRequired()])
     submit = SubmitField('Save Your answer')
+
+
+class RequestResetForm(FlaskForm):
+    email = StringField('E-mail Address', validators=[DataRequired(), Email()])
+    submit = SubmitField('Request Password Reset')
+
+    def validate_email(self, email):
+        user = User.query.filter_by(email=email.data).first()
+        if user is None:
+            raise ValidationError(
+                'There is no account with that email. You must register first.')
+
+
+class ResetPasswordForm(FlaskForm):
+    password = PasswordField('Password', validators=[
+                             DataRequired()])
+    confirm_password = PasswordField('Confirm Password', validators=[
+                                     DataRequired(), EqualTo('password')])
+    submit = SubmitField('Reset Password')
