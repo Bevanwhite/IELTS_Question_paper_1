@@ -19,7 +19,7 @@
     {% for writingpaper in writingpapers %}
     <div class="list-group">
       <a
-        href="{{ url_for('show_writing', writing_id= writingpaper.id )}}"
+        href="{{ url_for('writing.show_writing', writing_id= writingpaper.id )}}"
         class="list-group-item list-group-item-action"
       >
         <div class="d-flex w-100 justify-content-between">

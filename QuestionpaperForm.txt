@@ -1,0 +1,8 @@
+class QuestionpaperForm(FlaskForm):
+    title = StringField('Question Paper Title', validators=[DataRequired()])
+    question = IntegerField('How many Questions', validators=[DataRequired()])
+    questionpapertype = SelectField('Question Paper type', choices=[
+        ('reading', 'Reading'), ('listening', 'Listening')],
+        default=1, coerce=str)
+    duration = FloatField('Duration', validators=[DataRequired()])
+    submit = SubmitField('Create a Question Paper')

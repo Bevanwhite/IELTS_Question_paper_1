@@ -1,9 +1,9 @@
 from flask_wtf import FlaskForm
-from flask_wtf.file import FileField, FileAllowed
+from flask_wtf.file import FileAllowed, FileField
+from wtforms import StringField, SubmitField, PasswordField, BooleanField
 from flask_login import current_user
-from wtforms import StringField, PasswordField, SubmitField, BooleanField, TextAreaField, IntegerField, FloatField, SelectField
 from wtforms.validators import DataRequired, Length, Email, EqualTo, ValidationError
-from flaskblog.models import User, Post, Questionpaper, Writingpaper
+from flaskblog.models import User
 
 
 class RegistrationForm(FlaskForm):
@@ -79,46 +79,6 @@ class UpdateAccountForm(FlaskForm):
             if user:
                 raise ValidationError(
                     'This email is taken. Please choose a diffrent one')
-
-
-class PostForm(FlaskForm):
-    title = StringField('Title', validators=[DataRequired()])
-    content = TextAreaField('Content', validators=[DataRequired()])
-    submit = SubmitField('Post')
-
-
-class QuestionpaperForm(FlaskForm):
-    title = StringField('Question Paper Title', validators=[DataRequired()])
-    question = IntegerField('How many Questions', validators=[DataRequired()])
-    questionpapertype = SelectField('Question Paper type', choices=[
-        ('reading', 'Reading'), ('listening', 'Listening')],
-        default=1, coerce=str)
-    duration = FloatField('Duration', validators=[DataRequired()])
-    submit = SubmitField('Create a Question Paper')
-
-
-class WritingpaperForm(FlaskForm):
-    title = StringField('Question Paper Title',
-                        validators=[DataRequired()])
-    task01 = TextAreaField('Question 01', validators=[DataRequired()])
-    task01_img = FileField('Question 01 img', validators=[
-                           FileAllowed(['jpg', 'png'])])
-    task02 = TextAreaField('Question 02', validators=[DataRequired()])
-    task02_img = FileField('Question 02 img', validators=[
-                           FileAllowed(['jpg', 'png'])])
-    submit = SubmitField('Save the Writing Paper')
-
-    def validate_title(self, title):
-        writingpaper = Writingpaper.query.filter_by(title=title.data).first()
-        if writingpaper:
-            raise ValidationError(
-                'This title is taken. Please choose a diffrent one')
-
-
-class WritingpaperanswerForm(FlaskForm):
-    task01_answer = TextAreaField('Answer 01', validators=[DataRequired()])
-    task02_answer = TextAreaField('Answer 02', validators=[DataRequired()])
-    submit = SubmitField('Save Your answer')
 
 
 class RequestResetForm(FlaskForm):
