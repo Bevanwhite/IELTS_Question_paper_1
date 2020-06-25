@@ -1,60 +1,121 @@
-{% extends 'layout.html' %} {% block content %}
+{% extends 'layout.html' %} {% block content %} {% if writingpaper.wcreator ==
+current_user %}
+<div class="col-md-13 text-md-right">
+  <a
+    type="button"
+    class="btn btn-outline-info btn-sm"
+    href="{{ url_for('writing.update_writing', writing_id=writingpaper.id) }}"
+    >Update Post</a
+  >
+  <button
+    type="button"
+    class="btn btn-outline-danger btn-sm"
+    data-toggle="modal"
+    data-target="#deleteModal"
+  >
+    Delete Post
+  </button>
+</div>
+{% endif %}
 <div class="card mt-3 mb-3">
-  <div class="card-header">
-    {{ writingpaper.title }} Question 01
-  </div>
-  <div class="card-body">
-    <h5 class="card-title">{{ writingpaper.task01 }}</h5>
-    {% if writingpaper.task01_img %}
-    <img
-      src="{{ url_for('static', filename='writingpaper/' + writingpaper.task01_img) }}"
-      class="img-fluid float-right"
-      alt="..."
-    />
-    {% endif %} {{ form.task01_answer.label(class_="col-form-label
-    text-md-right")}} {% if form.task01_answer.errors %}
-    {{form.task01_answer(class="form-control col-md-7 is-invalid" , rows=10)}}
-    <div class="invaild-feedback col-md-3 text-danger">
-      {% for error in form.task01_answer.errors %}
-      <small>{{ error }}</small>
-      {% endfor %}
+  <form method="post" action="" enctype="multipart/form-data">
+    <div class="card-header">
+      {{ form1.hidden_tag() }}
+      <h5>Question 01</h5>
     </div>
-    {% else %} {{ form.task01_answer(class_="form-control col-md-7", rows=10)}}
-    {% endif %}
-  </div>
-  <div class="card-footer text-muted text-right">
-    {{ writingpaper.date_posted.strftime('%Y-%m-%d') }}
-    <a href="#" class="btn btn-primary">save the answer</a>
+    <div class="card-body">
+      <h6 class="card-title">
+        {% autoescape false %} {{ writingpaper.task01.replace('\n', '<br />') }}
+        {% endautoescape %}
+      </h6>
+      {% if writingpaper.task01_img %}
+      <div class="img-fluid">
+        <img
+          src="{{ url_for('static', filename='writingpaper/' + writingpaper.task01_img) }}"
+          class="img-fluid float-right"
+          alt="..."
+        />
+      </div>
+      {% endif %} {{ form1.task01_answer.label(class_="col-form-label
+      text-md-right")}} {% if form1.task01_answer.errors %}
+      {{form1.task01_answer(class="form-control col-md-7 is-invalid" ,
+      rows=15)}}
+      <div class="invaild-feedback col-md-3 text-danger">
+        {% for error in form1.task01_answer.errors %}
+        <small>{{ error }}</small>
+        {% endfor %}
+      </div>
+      {% else %} {{ form1.task01_answer(class_="form-control col-md-7",
+      rows=15)}} {% endif %}
+    </div>
+    <div class="card-footer text-muted text-right">
+      {{ writingpaper.date_posted.strftime('%Y-%m-%d') }} {{
+      form1.submit(class="btn btn-primary btn-sm")}}
+    </div>
+  </form>
+</div>
+<div class="card mt-3 mb-3">
+  <form method="post" action="" enctype="multipart/form-data">
+    {{ form2.hidden_tag() }}
+    <div class="card-header">
+      <h5>Question 02</h5>
+    </div>
+    <div class="card-body">
+      <h6 class="card-title">
+        {% autoescape false %}{{ writingpaper.task02.replace('\n', '<br />') }}
+        {% endautoescape %}
+      </h6>
+      {{ form2.task02_answer.label(class_="col-form-label text-md-right")}} {%
+      if form2.task02_answer.errors %} {{form2.task02_answer(class="form-control
+      col-md-7 is-invalid" , rows=10)}}
+      <div class="invaild-feedback col-md-3 text-danger">
+        {% for error in form2.task02_answer.errors %}
+        <small>{{ error }}</small>
+        {% endfor %}
+      </div>
+      {% else %} {{ form2.task02_answer(class_="form-control col-md-7",
+      rows=10)}} {% endif %}
+    </div>
+    <div class="card-footer text-muted text-right">
+      {{ writingpaper.date_posted.strftime('%Y-%m-%d') }} {{
+      form2.submit(class="btn btn-primary btn-sm")}}
+    </div>
+  </form>
+</div>
+<!-- for Delete Modal -->
+<div
+  class="modal fade"
+  id="deleteModal"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="deleteModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="deleteModalLabel">Delete Writing</h5>
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">
+          Close
+        </button>
+        <form
+          action="{{ url_for('writing.delete_writing', writing_id=writingpaper.id)}}"
+          method="POST"
+        >
+          <input class="btn btn-danger" type="submit" value="Delete" />
+        </form>
+      </div>
+    </div>
   </div>
 </div>
-
-<div class="card mt-3 mb-3">
-  <div class="card-header">
-    {{ writingpaper.title }} Question 02
-  </div>
-  <div class="card-body">
-    <h5 class="card-title">{{ writingpaper.task02 }}</h5>
-    {% if writingpaper.task02_img %}
-    <img
-      src="{{ url_for('static', filename='writingpaper/' + writingpaper.task02_img) }}"
-      class="img-fluid float-right"
-      alt="..."
-    />
-    {% endif %} {{ form.task02_answer.label(class_="col-form-label
-    text-md-right")}} {% if form.task02_answer.errors %}
-    {{form.task02_answer(class="form-control col-md-7 is-invalid" , rows=10)}}
-    <div class="invaild-feedback col-md-3 text-danger">
-      {% for error in form.task02_answer.errors %}
-      <small>{{ error }}</small>
-      {% endfor %}
-    </div>
-    {% else %} {{ form.task02_answer(class_="form-control col-md-7", rows=10)}}
-    {% endif %}
-  </div>
-  <div class="card-footer text-muted text-right">
-    {{ writingpaper.date_posted.strftime('%Y-%m-%d') }}
-    <a href="#" class="btn btn-primary">save the answer</a>
-  </div>
-</div>
-
 {% endblock content %}

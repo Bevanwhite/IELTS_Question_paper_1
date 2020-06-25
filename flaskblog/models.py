@@ -1,4 +1,4 @@
-from flaskblog import app, db, login_manger
+from flaskblog import db, login_manger, app
 from datetime import datetime
 from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
 from flask_login import UserMixin
@@ -10,7 +10,7 @@ def load_user(user_id):
     return User.query.get(int(user_id))
 
 
-class User(db.Model,  UserMixin):
+class User(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
     firstname = db.Column(db.String(20), nullable=False)
     lastname = db.Column(db.String(20), nullable=False)
@@ -73,10 +73,9 @@ class Questionpaper(db.Model):
 class Writingpaper(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(300), unique=True, nullable=False)
-    task01 = db.Column(db.String(600), nullable=False)
+    task01 = db.Column(db.String(1000), nullable=False)
     task01_img = db.Column(db.String(20), nullable=True)
-    task02 = db.Column(db.String(600), nullable=False)
-    task02_img = db.Column(db.String(20), nullable=True)
+    task02 = db.Column(db.String(1000), nullable=False)
     date_posted = db.Column(db.DateTime, nullable=False,
                             default=datetime.utcnow)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
@@ -91,7 +90,8 @@ class Writingpaperanswer(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     pid = db.Column(db.Integer, db.ForeignKey(
         'writingpaper.id'), nullable=False)
-    task01_answer = db.Column(db.String(600), nullable=False)
+    task = db.Column(db.String(1000), nullable=False)
+    type = db.Column(db.String(200), nullable=False)
     date_posted = db.Column(db.DateTime, nullable=False,
                             default=datetime.utcnow)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)

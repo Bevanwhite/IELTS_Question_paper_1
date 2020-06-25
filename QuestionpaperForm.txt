@@ -6,3 +6,17 @@ class QuestionpaperForm(FlaskForm):
         default=1, coerce=str)
     duration = FloatField('Duration', validators=[DataRequired()])
     submit = SubmitField('Create a Question Paper')
+
+
+@writing.route("/writing/<int:writing_id>", methods=['GET', 'POST'])
+@login_required
+def answer_question(writing_id):
+    form = WritingpaperanswerForm()
+    if form.validate_on_submit(writing_id):
+        writing = Writingpaperanswer(pid=writing_id, task01_answer=form.task01_answer.data,
+                                     task02_answer=form.task02_answer.data, wcandidate=current_user)
+        db.session.add(writing)
+        db.session.commit()
+        flash('Your post has been Created!', 'success')
+        return redirect(url_for('main.home'))
+    return render_template('create_post.html', title='New Post', form=form, legend='New Post')

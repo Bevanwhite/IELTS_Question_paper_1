@@ -23,7 +23,21 @@ class WritingpaperForm(FlaskForm):
                 'This title is taken. Please choose a diffrent one')
 
 
-class WritingpaperanswerForm(FlaskForm):
-    task01_answer = TextAreaField('Answer 01', validators=[DataRequired()])
-    task02_answer = TextAreaField('Answer 02', validators=[DataRequired()])
+class WritingUpdateForm(FlaskForm):
+    title = StringField('Question Paper Title',
+                        validators=[DataRequired()])
+    task01 = TextAreaField('Question 01', validators=[DataRequired()])
+    task01_img = FileField('Question 01 img', validators=[
+                           FileAllowed(['jpg', 'png'])])
+    task02 = TextAreaField('Question 02', validators=[DataRequired()])
+    submit = SubmitField('Save the Writing Paper')
+
+
+class WritingpaperoneForm(FlaskForm):
+    task01_answer = TextAreaField('Answer', validators=[DataRequired()])
+    submit = SubmitField('Save Your answer')
+
+
+class WritingpapertwoForm(FlaskForm):
+    task02_answer = TextAreaField('Answer', validators=[DataRequired()])
     submit = SubmitField('Save Your answer')

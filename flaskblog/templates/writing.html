@@ -1,22 +1,23 @@
 {% extends 'layout.html' %} {% block content %}
 <div class="row justify-content-center mt-3 mb-3">
   <div class="col-md-10">
-    <div class="card mb-3">
-      <div class="card-body">
-        New Writing Question Paper {% if current_user.is_authenticated %}
-        <div class="text-right">
-          <a
-            type="button"
-            class="btn btn-outline-primary btn-sm"
-            href="/writing/new"
-          >
-            New Writing Question Paper
-          </a>
-        </div>
-        {% endif %}
+    {% if current_user.is_authenticated %}
+    <div class="col-md-13 text-md-right">
+      <a
+        type="button"
+        class="btn btn-outline-primary btn-sm"
+        href="/writing/new"
+      >
+        + Question Paper
+      </a>
+    </div>
+    {% endif %}
+    <div class="card mb-3 mt-3">
+      <div class="card-header">
+        <h5>IELTS Writing Question Papers</h5>
       </div>
     </div>
-    {% for writingpaper in writingpapers %}
+    {% for writingpaper in writingpapers.items %}
     <div class="list-group">
       <a
         href="{{ url_for('writing.show_writing', writing_id= writingpaper.id )}}"
@@ -32,6 +33,23 @@
       </a>
     </div>
     {% endfor %}
+    <div class="text-center mt-3">
+      {% for page_num in writingpapers.iter_pages( left_edge=1, right_edge=1,
+      left_current=1, right_current=2) %} {% if page_num %} {% if
+      writingpapers.page == page_num %}
+      <a
+        class="btn btn-info mb-4"
+        href="{{ url_for('writing.write', page=page_num) }}"
+        >{{ page_num }}</a
+      >
+      {% else %}
+      <a
+        class="btn btn-outline-info mb-4"
+        href="{{ url_for('writing.write', page=page_num) }}"
+        >{{ page_num }}</a
+      >
+      {% endif%} {% else %} .... {% endif%} {% endfor %}
+    </div>
   </div>
+  {% endblock content %}
 </div>
-{% endblock content %}

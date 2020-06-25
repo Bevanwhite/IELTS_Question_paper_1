@@ -54,17 +54,6 @@
             %}
           </div>
           <div class="form-group row">
-            {{ form.task02_img.label(class_="col-md-3 col-form-label
-            text-md-right")}} {{ form.task02_img(class="form-control-item") }}
-            {% if form.task02_img.errors %}
-            <div class="invaild-feedback col-md-3 text-danger">
-              {% for error in form.task02_img.errors %}
-              <small>{{ error }}</small>
-              {% endfor %}
-            </div>
-            {% else %} {% endif %}
-          </div>
-          <div class="form-group row">
             <div class="offset-md-3">
               {{ form.submit(class="btn btn-primary")}}
             </div>
