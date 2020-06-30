@@ -1,7 +1,7 @@
 from flask_wtf import FlaskForm
 from flask_wtf.file import FileField, FileAllowed
 from wtforms import StringField, SubmitField, TextAreaField
-from wtforms.validators import DataRequired, ValidationError
+from wtforms.validators import DataRequired, ValidationError, Length, Regexp
 from flaskblog.models import Writingpaper
 
 
@@ -34,10 +34,12 @@ class WritingUpdateForm(FlaskForm):
 
 
 class WritingpaperoneForm(FlaskForm):
-    task01_answer = TextAreaField('Answer', validators=[DataRequired()])
+    task01_answer = TextAreaField(
+        'Answer', validators=[DataRequired(), Length(min=150)])
     submit = SubmitField('Save Your answer')
 
 
 class WritingpapertwoForm(FlaskForm):
-    task02_answer = TextAreaField('Answer', validators=[DataRequired()])
+    task02_answer = TextAreaField(
+        'Answer', validators=[DataRequired(), Length(min=250)])
     submit = SubmitField('Save Your answer')
