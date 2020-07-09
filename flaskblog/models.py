@@ -19,12 +19,12 @@ class User(db.Model, UserMixin):
     image_file = db.Column(db.String(20), nullable=False,
                            default='default.jpg')
     post = db.relationship('Post', backref='author', lazy=True)
-    questionpaper = db.relationship(
-        'Questionpaper', backref='creator', lazy=True)
     writingpaper = db.relationship(
         'Writingpaper', backref='wcreator', lazy=True)
     writinganswer = db.relationship(
         'Writingpaperanswer', backref='wcandidate', lazy=True)
+    speaking = db.relationship(
+        'Speaking', backref='vspeak', lazy=True)
 
     def get_reset_token(self, expires_sec=1800):
         s = Serializer(app.config['SECRET_KEY'], expires_sec)
@@ -47,26 +47,12 @@ class Post(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(100), nullable=False)
     date_posted = db.Column(db.DateTime, nullable=False,
-                            default=datetime.utcnow)
+                            default=datetime.now())
     content = db.Column(db.Text, nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
 
     def __repr__(self):
         return f"Post('{self.title}','{self.date_posted}')"
-
-
-class Questionpaper(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    title = db.Column(db.String(100), unique=True, nullable=False)
-    questions = db.Column(db.Integer, nullable=False)
-    questiontype = db.Column(db.String(50), nullable=False)
-    duration = db.Column(db.Float, nullable=False)
-    date_posted = db.Column(db.DateTime, nullable=False,
-                            default=datetime.utcnow)
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
-
-    def __repr__(self):
-        return f"Questionpaper('{self.title}','{self.questions}')"
 
 
 class Writingpaper(db.Model):
@@ -76,7 +62,7 @@ class Writingpaper(db.Model):
     task01_img = db.Column(db.String(20), nullable=True)
     task02 = db.Column(db.String(1000), nullable=False)
     date_posted = db.Column(db.DateTime, nullable=False,
-                            default=datetime.utcnow)
+                            default=datetime.now())
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     answer = db.relationship(
         'Writingpaperanswer', backref='candidate', lazy=True)
@@ -92,7 +78,7 @@ class Writingpaperanswer(db.Model):
     task = db.Column(db.String(1000), nullable=False)
     type = db.Column(db.String(200), nullable=False)
     date_posted = db.Column(db.DateTime, nullable=False,
-                            default=datetime.utcnow)
+                            default=datetime.now())
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
 
     def __repr__(self):
@@ -108,7 +94,7 @@ class Mutlichoosequestion(db.Model):
     option4 = db.Column(db.String(1000), nullable=False)
     correctanswer = db.Column(db.String(1000), nullable=False)
     date_posted = db.Column(db.DateTime, nullable=False,
-                            default=datetime.utcnow)
+                            default=datetime.now())
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     answer = db.relationship(
         'Mutlichooseanswer', backref='Mccandidate', lazy=True)
@@ -123,8 +109,29 @@ class Mutlichooseanswer(db.Model):
         'mutlichoosequestion.id'), nullable=False)
     option_selected = db.Column(db.String(1000), nullable=False)
     date_posted = db.Column(db.DateTime, nullable=False,
-                            default=datetime.utcnow)
+                            default=datetime.now())
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
 
     def __repr__(self):
         return f"Mutlichooseanswer('{self.id}','{self.option_selected}')"
+
+
+class Speaking(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.String(300), unique=True, nullable=False)
+    question_01 = db.Column(db.String(500), nullable=False)
+    question_02 = db.Column(db.String(500), nullable=False)
+    question_03 = db.Column(db.String(500), nullable=False)
+    question_04 = db.Column(db.String(500), nullable=False)
+    question_05 = db.Column(db.String(500), nullable=False)
+    date_posted = db.Column(db.DateTime, nullable=False,
+                            default=datetime.now())
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+
+    def __repr__(self):
+        return f"Speak('{self.id}','{self.user_id}')"
+
+
+class checktable(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.LargeBinary, nullable=False)

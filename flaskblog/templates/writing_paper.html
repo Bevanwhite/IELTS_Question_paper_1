@@ -1,5 +1,5 @@
-{% extends 'layout.html' %} {% block content %} {% if writingpaper.wcreator ==
-current_user %}
+{% extends 'layout.html' %} {% block content %} 
+{% if writingpaper.wcreator == current_user %}
 <div class="col-md-13 text-md-right">
   <a
     type="button"
@@ -25,7 +25,8 @@ current_user %}
     </div>
     <div class="card-body">
       <h6 class="card-title">
-        {% autoescape false %} {{ writingpaper.task01.replace('\n', '<br />') }}
+        {% autoescape false %} 
+          {{ writingpaper.task01.replace('\n', '<br />') }}
         {% endautoescape %}
       </h6>
       {% if writingpaper.task01_img %}
@@ -36,21 +37,22 @@ current_user %}
           alt="..."
         />
       </div>
-      {% endif %} {{ form1.task01_answer.label(class_="col-form-label
-      text-md-right")}} {% if form1.task01_answer.errors %}
-      {{form1.task01_answer(class="form-control col-md-7 is-invalid" ,
-      rows=15)}}
-      <div class="invaild-feedback col-md-3 text-danger">
-        {% for error in form1.task01_answer.errors %}
-        <small>{{ error }}</small>
-        {% endfor %}
-      </div>
-      {% else %} {{ form1.task01_answer(class_="form-control col-md-7",
-      rows=15)}} {% endif %}
+      {% endif %} 
+      {{ form1.task01_answer.label(class_="col-form-label text-md-right")}} 
+      {% if form1.task01_answer.errors %}
+        {{form1.task01_answer(class="form-control col-md-7 is-invalid", rows=15)}}
+        <div class="invaild-feedback col-md-3 text-danger">
+          {% for error in form1.task01_answer.errors %}
+          <small>{{ error }}</small>
+          {% endfor %}
+        </div>
+      {% else %} 
+        {{ form1.task01_answer(class_="form-control col-md-7", rows=15)}} 
+      {% endif %}
     </div>
     <div class="card-footer text-muted text-right">
-      {{ writingpaper.date_posted.strftime('%Y-%m-%d') }} {{
-      form1.submit(class="btn btn-primary btn-sm")}}
+      {{ writingpaper.date_posted.strftime('%Y-%m-%d') }} 
+      {{ form1.submit(class="btn btn-primary btn-sm")}}
     </div>
   </form>
 </div>
@@ -62,23 +64,25 @@ current_user %}
     </div>
     <div class="card-body">
       <h6 class="card-title">
-        {% autoescape false %}{{ writingpaper.task02.replace('\n', '<br />') }}
+        {% autoescape false %}
+          {{ writingpaper.task02.replace('\n', '<br />') }}
         {% endautoescape %}
       </h6>
-      {{ form2.task02_answer.label(class_="col-form-label text-md-right")}} {%
-      if form2.task02_answer.errors %} {{form2.task02_answer(class="form-control
-      col-md-7 is-invalid" , rows=10)}}
-      <div class="invaild-feedback col-md-3 text-danger">
-        {% for error in form2.task02_answer.errors %}
-        <small>{{ error }}</small>
-        {% endfor %}
-      </div>
-      {% else %} {{ form2.task02_answer(class_="form-control col-md-7",
-      rows=10)}} {% endif %}
+      {{ form2.task02_answer.label(class_="col-form-label text-md-right")}} 
+      {% if form2.task02_answer.errors %} 
+        {{form2.task02_answer(class="form-control col-md-7 is-invalid", rows=10)}}
+        <div class="invaild-feedback col-md-3 text-danger">
+          {% for error in form2.task02_answer.errors %}
+          <small>{{ error }}</small>
+          {% endfor %}
+        </div>
+      {% else %} 
+        {{ form2.task02_answer(class_="form-control col-md-7", rows=10)}} 
+      {% endif %}
     </div>
     <div class="card-footer text-muted text-right">
-      {{ writingpaper.date_posted.strftime('%Y-%m-%d') }} {{
-      form2.submit(class="btn btn-primary btn-sm")}}
+      {{ writingpaper.date_posted.strftime('%Y-%m-%d') }} 
+      {{ form2.submit(class="btn btn-primary btn-sm")}}
     </div>
   </form>
 </div>

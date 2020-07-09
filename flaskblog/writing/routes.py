@@ -5,6 +5,7 @@ from flaskblog.models import Writingpaper, Writingpaperanswer
 from flaskblog.writing.forms import WritingpaperForm, WritingUpdateForm, WritingpapertwoForm, WritingpaperoneForm
 from flaskblog.writing.utils import paper_picture
 
+
 writing = Blueprint('writing', __name__)
 
 
@@ -93,3 +94,8 @@ def delete_writing(writing_id):
     db.session.commit()
     flash('Your Writing Paper has been deleted!!', 'success')
     return redirect(url_for('writing.write'))
+
+
+@writing.route("/writing/<int:writing_id>/result", methods=['POST', 'GET'])
+def result():
+    pass
