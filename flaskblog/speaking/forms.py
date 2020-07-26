@@ -18,3 +18,11 @@ class SpeakForm(FlaskForm):
         if speak:
             raise ValidationError(
                 'This title is taken. Please choose a diffrent one')
+
+
+class RecodingForm(FlaskForm):
+    record1 = SubmitField('record your answer')
+    record2 = SubmitField('record your answer')
+    record3 = SubmitField('record your answer')
+    record4 = SubmitField('record your answer')
+    record5 = SubmitField('record your answer')

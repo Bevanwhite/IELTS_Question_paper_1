@@ -25,6 +25,8 @@ class User(db.Model, UserMixin):
         'Writingpaperanswer', backref='wcandidate', lazy=True)
     speaking = db.relationship(
         'Speaking', backref='vspeak', lazy=True)
+    speakinganswer = db.relationship(
+        'Speakinganswer', backref='speakanswer', lazy=True)
 
     def get_reset_token(self, expires_sec=1800):
         s = Serializer(app.config['SECRET_KEY'], expires_sec)
@@ -127,11 +129,24 @@ class Speaking(db.Model):
     date_posted = db.Column(db.DateTime, nullable=False,
                             default=datetime.now())
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    answer = db.relationship(
+        'Speakinganswer', backref='speakingid', lazy=True)
 
     def __repr__(self):
         return f"Speak('{self.id}','{self.user_id}')"
 
 
-class checktable(db.Model):
+class Speakinganswer(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    title = db.Column(db.LargeBinary, nullable=False)
+    pid = db.Column(db.Integer, db.ForeignKey('speaking.id'), nullable=False)
+    answer_01 = db.Column(db.String(500), nullable=True)
+    answer_02 = db.Column(db.String(500), nullable=True)
+    answer_03 = db.Column(db.String(500), nullable=True)
+    answer_04 = db.Column(db.String(500), nullable=True)
+    answer_05 = db.Column(db.String(500), nullable=True)
+    date_posted = db.Column(db.DateTime, nullable=False,
+                            default=datetime.now())
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+
+    def __repr__(self):
+        return f"Speak('{self.id}','{self.user_id}')"

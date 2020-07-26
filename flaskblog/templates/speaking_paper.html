@@ -6,30 +6,48 @@
         <h5>IELTS Speaking Question Paper</h5>
       </div>
       <div class="card-body">
+      <form method="post" action="" enctype="multipart/form-data">
         <h6>Question 01</h6>
         <audio controls controlslist="nodownload">
             <source src="{{url_for('static', filename='audio/' + speak.question_01) }}" type="audio/mpeg">
+            
         </audio>
+          {{ form.record1(class="btn btn-primary btn-sm")}}
+          {{file_name1}}
         <h6>Question 02</h6>
         <audio controls controlslist="nodownload">
             <source src="{{url_for('static', filename='audio/' + speak.question_02) }}" type="audio/mpeg">
         </audio>
+        
+          {{ form.record2(class="btn btn-primary btn-sm")}}
+          {{file_name2}}
+
         <h6>Question 03</h6>
         <audio controls controlslist="nodownload">
             <source src="{{url_for('static', filename='audio/' + speak.question_03) }}" type="audio/mpeg">
         </audio>
+        
+          {{ form.record3(class="btn btn-primary btn-sm")}}
+          {{file_name3}}
+        
         <h6>Question 04</h6>
         <audio controls controlslist="nodownload">
             <source src="{{url_for('static', filename='audio/' + speak.question_04) }}" type="audio/mpeg">
         </audio>
+      
+          {{ form.record4(class="btn btn-primary btn-sm")}}
+          {{file_name4}}
+
         <h6>Question 05</h6>
         <audio controls controlslist="nodownload">
             <source src="{{url_for('static', filename='audio/' + speak.question_05) }}" type="audio/mpeg">
         </audio>
+        
+          {{ form.record5(class="btn btn-primary btn-sm")}}
+          {{file_name5}}
+        </form>
       </div>
     </div>
   </div>
 </div>
-
-
 {% endblock content %}

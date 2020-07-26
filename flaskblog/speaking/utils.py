@@ -4,10 +4,12 @@ import secrets
 import os
 import sounddevice as sd
 from scipy.io.wavfile import write
+from scipy.io import wavfile
 import pyaudio
 import speech_recognition as sr
 import wavio
 from flaskblog import app
+import numpy as np
 
 
 def Someaudio(form_audio):
@@ -30,12 +32,32 @@ def Someaudio(form_audio):
         print(file_name)
 
 
-def record(seconds, file_name):
-    count = 0
-    fs = 44100  # sample rate
+count = 0
 
-    myrecording = sd.rec(int(seconds * fs), samplerate=fs, channels=2)
+
+def record(seconds):
+    global count
+    fs = 44100  # sample rate
+    random_file_name = secrets.token_hex(8)
+    myrecoding = sd.rec(int(seconds*fs), samplerate=fs, channels=2)
     sd.wait()
-    write('data/' + file_name + '.wav', fs, myrecording)
-    wavio.write('static/' + file_name + '.wav', myrecording, fs, sampwidth=2)
+    os.chdir('/Users/Bevan/Desktop/New folder (3)/myflaskapp/flaskblog/static/')
+    wavio.write('data/' + random_file_name +
+                '.wav', myrecoding, fs, sampwidth=2)
     count = count+1
+    r = sr.Recognizer()
+    os.chdir('/Users/Bevan/Desktop/New folder (3)/myflaskapp/flaskblog/static/')
+    file = sr.AudioFile('data/' + random_file_name + '.wav')
+
+    with file as source:
+        audio = r.record(source)
+    try:
+        text = r.recognize_google(audio, language='en')
+        print(text)
+        marks = text
+    except sr.UnknownValueError:
+        marks = 'none'
+        os.chdir(
+            '/Users/Bevan/Desktop/New folder (3)/myflaskapp/flaskblog/static/data/')
+        os.remove(random_file_name + '.wav')
+    return marks

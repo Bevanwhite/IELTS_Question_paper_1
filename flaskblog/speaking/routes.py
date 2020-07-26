@@ -1,10 +1,12 @@
-from flask import render_template, Blueprint, flash, redirect, url_for
+from flask import render_template, Blueprint, flash, redirect, url_for, request, jsonify
 from flask_login import login_required
-from flaskblog.speaking.forms import SpeakForm
-from flaskblog.speaking.utils import Someaudio
+from flaskblog.speaking.forms import SpeakForm, RecodingForm
+from flaskblog.speaking.utils import Someaudio, record
 from flaskblog import db
-from flaskblog.models import Speaking
+from flaskblog.models import Speaking, Speakinganswer
 from flask_login import current_user
+import speech_recognition as sr
+import os
 
 speaking = Blueprint('speaking', __name__)
 
@@ -38,4 +40,63 @@ def new_speaking():
 @login_required
 def show_speaking(speaking_id):
     speak = Speaking.query.get_or_404(speaking_id)
-    return render_template('speaking_paper.html',  speak=speak)
+    form = RecodingForm()
+    speaksA = Speakinganswer.query.all()
+    print(speaksA[-1])
+    print(speaksA[-1].id + 1)
+
+    if form.is_submitted():
+        x = 0
+        print(x)
+        while(x == 0):
+            speaks = Speakinganswer(id=speaksA[-1].id + 1,
+                                    pid=speaking_id, speakanswer=current_user)
+            db.session.add(speaks)
+            db.session.commit()
+            x = x+1
+
+        if form.record1.data:
+            file_name1 = record(5)
+            print(file_name1)
+            print(speaksA[-1].id + 1)
+            if (file_name1 != 'none'):
+                speaks.id = speaksA[-1].id + 1
+                speaks.pid = speaking_id
+                speaks.answer_01 = file_name1
+                speaks.speakanswer = current_user
+                db.session.commit()
+            file_name2 = "none"
+            file_name3 = "none"
+            file_name4 = "none"
+            file_name5 = "none"
+        elif form.record2.data:
+            file_name2 = record(5)
+            file_name1 = "none"
+            file_name3 = "none"
+            file_name4 = "none"
+            file_name5 = "none"
+        elif form.record3.data:
+            file_name3 = record(5)
+            file_name2 = "none"
+            file_name1 = "none"
+            file_name4 = "none"
+            file_name5 = "none"
+        elif form.record4.data:
+            file_name4 = record(5)
+            file_name2 = "none"
+            file_name3 = "none"
+            file_name1 = "none"
+            file_name5 = "none"
+        elif form.record5.data:
+            file_name5 = record(5)
+            file_name2 = "none"
+            file_name3 = "none"
+            file_name4 = "none"
+            file_name1 = "none"
+        return render_template('speaking_paper.html',  speak=speak, file_name1=file_name1, file_name2=file_name2, file_name3=file_name3, file_name4=file_name4, file_name5=file_name5, form=form)
+    file_name1 = "none"
+    file_name2 = "none"
+    file_name3 = "none"
+    file_name4 = "none"
+    file_name5 = "none"
+    return render_template('speaking_paper.html',  speak=speak, file_name1=file_name1, file_name2=file_name2, file_name3=file_name3, file_name4=file_name4, file_name5=file_name5, form=form)
