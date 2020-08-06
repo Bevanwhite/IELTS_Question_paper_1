@@ -26,3 +26,4 @@ class RecodingForm(FlaskForm):
     record3 = SubmitField('record your answer')
     record4 = SubmitField('record your answer')
     record5 = SubmitField('record your answer')
+    submit = SubmitField('Save the all the anwsers')

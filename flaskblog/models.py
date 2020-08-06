@@ -129,8 +129,6 @@ class Speaking(db.Model):
     date_posted = db.Column(db.DateTime, nullable=False,
                             default=datetime.now())
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
-    answer = db.relationship(
-        'Speakinganswer', backref='speakingid', lazy=True)
 
     def __repr__(self):
         return f"Speak('{self.id}','{self.user_id}')"
@@ -138,15 +136,15 @@ class Speaking(db.Model):
 
 class Speakinganswer(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    pid = db.Column(db.Integer, db.ForeignKey('speaking.id'), nullable=False)
-    answer_01 = db.Column(db.String(500), nullable=True)
-    answer_02 = db.Column(db.String(500), nullable=True)
-    answer_03 = db.Column(db.String(500), nullable=True)
-    answer_04 = db.Column(db.String(500), nullable=True)
-    answer_05 = db.Column(db.String(500), nullable=True)
+    pid = db.Column(db.Integer, nullable=True)
+    answer01 = db.Column(db.String(500), nullable=True)
+    answer02 = db.Column(db.String(500), nullable=True)
+    answer03 = db.Column(db.String(500), nullable=True)
+    answer04 = db.Column(db.String(500), nullable=True)
+    answer05 = db.Column(db.String(500), nullable=True)
     date_posted = db.Column(db.DateTime, nullable=False,
                             default=datetime.now())
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
 
     def __repr__(self):
-        return f"Speak('{self.id}','{self.user_id}')"
+        return f"Speak('{self.id}','{self.user_id}','{self.date_posted}')"

@@ -1,0 +1,165 @@
+
+Bevan@Bevan MINGW64 ~/Desktop/New folder (3)/myflaskapp (master)
+$ python
+Python 3.7.7 (tags/v3.7.7:d7c567b08f, Mar 10 2020, 10:41:24) [MSC v.1900 64 bit (AMD64)] on win32
+Type "help", "copyright", "credits" or "license" for more information.
+>>> from datetime import datetime
+>>> datetime.now()
+datetime.datetime(2020, 8, 6, 23, 11, 51, 245832)
+>>> 2020-08-06 01:58:08.594727 - datetime.now()
+  File "<stdin>", line 1
+    2020-08-06 01:58:08.594727 - datetime.now()
+          ^
+SyntaxError: invalid token
+>>> '2020-08-06 01:58:08.594727' - datetime.now()
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+TypeError: unsupported operand type(s) for -: 'str' and 'datetime.datetime'
+>>> from flaskblog import Speakinganswer
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+ImportError: cannot import name 'Speakinganswer' from 'flaskblog' (C:\Users\Bevan\Desktop\New folder (3)\myflaskapp\flaskblog\__init__.py)
+>>> from flaskblog.models import Speakinganswer
+>>> Speakinganswer
+<class 'flaskblog.models.Speakinganswer'>
+>>> Speakinganswer[0]
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+TypeError: 'DefaultMeta' object is not subscriptable
+>>> Speakinganswer.dateposed
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+AttributeError: type object 'Speakinganswer' has no attribute 'dateposed'
+>>> Speakinganswer.date_posted
+<sqlalchemy.orm.attributes.InstrumentedAttribute object at 0x0000025945DC1408>
+>>> type(Speakinganswer.date_posted)
+<class 'sqlalchemy.orm.attributes.InstrumentedAttribute'>
+>>> Speakinganswer.query.all()
+[Speak('1','1'), Speak('2','1'), Speak('3','1'), Speak('4','1'), Speak('5','1'), Speak('6','1'), Speak('7','1'), Speak('8','1')]
+>>> Speakinganswer.query.all()
+[Speak('1','1'), Speak('2','1'), Speak('3','1'), Speak('4','1'), Speak('5','1'), Speak('6','1'), Speak('7','1'), Speak('8','1')]
+>>> exit()
+
+Bevan@Bevan MINGW64 ~/Desktop/New folder (3)/myflaskapp (master)
+$ python
+Python 3.7.7 (tags/v3.7.7:d7c567b08f, Mar 10 2020, 10:41:24) [MSC v.1900 64 bit (AMD64)] on win32
+Type "help", "copyright", "credits" or "license" for more information.
+>>> from datetime import datetime
+>>> from flaskblog.models import Speakinganswer
+>>> Speakinganswer.query.all()
+[Speak('1','1',,'2020-08-06 01:58:08.594727'), Speak('2','1',,'2020-08-06 01:59:41.536421'), Speak('3','1',,'2020-08-06 02:04:33.476664'), Speak('4','1',,'2020-08-06 02:04:44.938484'), Speak('5','1',,'2020-08-06 02:06:17.720883'), Speak('6','1',,'2020-08-06 02:07:58.616578'), Speak('7','1',,'2020-08-06 02:11:00.584276'), Speak('8','1',,'2020-08-06 02:11:14.004954')]
+>>> Speakinganswer.query.all()
+[Speak('1','1',,'2020-08-06 01:58:08.594727'), Speak('2','1',,'2020-08-06 01:59:41.536421'), Speak('3','1',,'2020-08-06 02:04:33.476664'), Speak('4','1',,'2020-08-06 02:04:44.938484'), Speak('5','1',,'2020-08-06 02:06:17.720883'), Speak('6','1',,'2020-08-06 02:07:58.616578'), Speak('7','1',,'2020-08-06 02:11:00.584276'), Speak('8','1',,'2020-08-06 02:11:14.004954')]
+>>> speaks = Speakinganswer.query.all()
+>>> type(speaks[-1].date_posted)
+<class 'datetime.datetime'>
+>>> speaks[-1].date_posted
+datetime.datetime(2020, 8, 6, 2, 11, 14, 4954)
+>>> speaks[-1].date_posted - datetime.now()
+datetime.timedelta(days=-1, seconds=7519, microseconds=852798)
+>>> datetime.now() - .date_posted
+  File "<stdin>", line 1
+    datetime.now() - .date_posted
+                     ^
+SyntaxError: invalid syntax
+>>> datetime.now() - speaks[-1].date_posted
+datetime.timedelta(seconds=79022, microseconds=332002)
+>>> datetime.now() - speaks[-1].date_posted > seconds=900
+  File "<stdin>", line 1
+SyntaxError: can't assign to comparison
+>>> type(datetime.now() - speaks[-1].date_posted )
+<class 'datetime.timedelta'>
+>>> datetime.now() - speaks[-1].date_posted > datetime.timedelta(seconds=900)
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+AttributeError: type object 'datetime.datetime' has no attribute 'timedelta'
+>>> from datetime import timedelta
+>>> datetime.now() - speaks[-1].date_posted > datetime.timedelta(seconds=900)
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+AttributeError: type object 'datetime.datetime' has no attribute 'timedelta'
+>>> type(datetime.now() - speaks[-1].date_posted)
+<class 'datetime.timedelta'>
+>>> from datetime.timedelta  import timedelta
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+ModuleNotFoundError: No module named 'datetime.timedelta'; 'datetime' is not a package
+>>> from timedelta  import timedelta
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+ModuleNotFoundError: No module named 'timedelta'
+>>> from datetime import timedelta
+>>> datetime.now() - speaks[-1].date_posted > datetime.timedelta(seconds=900)
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+AttributeError: type object 'datetime.datetime' has no attribute 'timedelta'
+>>> datetime.now() - speaks[-1].date_posted > timedelta(seconds=900)
+True
+>>> speaks[-1].user_id == current_user
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+NameError: name 'current_user' is not defined
+>>> from flask_login import current_user
+>>> speaks[-1].user_id == current_user
+False
+>>> current_user
+None
+>>> type(current_user)
+<class 'werkzeug.local.LocalProxy'>
+>>> datetime.now() - speaks[-1].date_posted <= timedelta(seconds=900)
+False
+>>> speaks = Speakinganswer.query.all()
+>>> speak = Speakinganswer(
+...                 id=1, pid=1, date_posted=datetime.now(), speakanswer=1)
+Traceback (most recent call last):
+  File "<stdin>", line 2, in <module>
+  File "<string>", line 4, in __init__
+  File "C:\Users\Bevan\AppData\Local\Programs\Python\Python37\lib\site-packages\sqlalchemy\orm\state.py", line 433, in _initialize_instance
+    manager.dispatch.init_failure(self, args, kwargs)
+  File "C:\Users\Bevan\AppData\Local\Programs\Python\Python37\lib\site-packages\sqlalchemy\util\langhelpers.py", line 69, in __exit__
+    exc_value, with_traceback=exc_tb,
+  File "C:\Users\Bevan\AppData\Local\Programs\Python\Python37\lib\site-packages\sqlalchemy\util\compat.py", line 178, in raise_
+    raise exception
+  File "C:\Users\Bevan\AppData\Local\Programs\Python\Python37\lib\site-packages\sqlalchemy\orm\state.py", line 430, in _initialize_instance
+    return manager.original_init(*mixed[1:], **kwargs)
+  File "C:\Users\Bevan\AppData\Local\Programs\Python\Python37\lib\site-packages\sqlalchemy\ext\declarative\base.py", line 842, in _declarative_constructor
+    setattr(self, k, kwargs[k])
+  File "C:\Users\Bevan\AppData\Local\Programs\Python\Python37\lib\site-packages\sqlalchemy\orm\attributes.py", line 273, in __set__
+    instance_state(instance), instance_dict(instance), value, None
+  File "C:\Users\Bevan\AppData\Local\Programs\Python\Python37\lib\site-packages\sqlalchemy\orm\attributes.py", line 1019, in set
+    value = self.fire_replace_event(state, dict_, value, old, initiator)
+  File "C:\Users\Bevan\AppData\Local\Programs\Python\Python37\lib\site-packages\sqlalchemy\orm\attributes.py", line 1042, in fire_replace_event
+    state, value, previous, initiator or self._replace_token
+  File "C:\Users\Bevan\AppData\Local\Programs\Python\Python37\lib\site-packages\sqlalchemy\orm\attributes.py", line 1451, in emit_backref_from_scalar_set_event
+    instance_state(child),
+AttributeError: 'int' object has no attribute '_sa_instance_state'
+>>> speak = Speakinganswer(
+... ...                 id=1, pid=1, date_posted=datetime.now(), speakanswer=1)^Z
+  File "<stdin>", line 2
+    ...                 id=1, pid=1, date_posted=datetime.now(), speakanswer=1)
+                         ^
+SyntaxError: invalid syntax
+>>> speak = Speakinganswer(id=1, pid=1, date_posted=datetime.now(), speakanswer=1)
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+  File "<string>", line 4, in __init__
+  File "C:\Users\Bevan\AppData\Local\Programs\Python\Python37\lib\site-packages\sqlalchemy\orm\state.py", line 433, in _initialize_instance
+    manager.dispatch.init_failure(self, args, kwargs)
+  File "C:\Users\Bevan\AppData\Local\Programs\Python\Python37\lib\site-packages\sqlalchemy\util\langhelpers.py", line 69, in __exit__
+    exc_value, with_traceback=exc_tb,
+  File "C:\Users\Bevan\AppData\Local\Programs\Python\Python37\lib\site-packages\sqlalchemy\util\compat.py", line 178, in raise_
+    raise exception
+  File "C:\Users\Bevan\AppData\Local\Programs\Python\Python37\lib\site-packages\sqlalchemy\orm\state.py", line 430, in _initialize_instance
+    return manager.original_init(*mixed[1:], **kwargs)
+  File "C:\Users\Bevan\AppData\Local\Programs\Python\Python37\lib\site-packages\sqlalchemy\ext\declarative\base.py", line 842, in _declarative_constructor
+    setattr(self, k, kwargs[k])
+  File "C:\Users\Bevan\AppData\Local\Programs\Python\Python37\lib\site-packages\sqlalchemy\orm\attributes.py", line 273, in __set__
+    instance_state(instance), instance_dict(instance), value, None
+  File "C:\Users\Bevan\AppData\Local\Programs\Python\Python37\lib\site-packages\sqlalchemy\orm\attributes.py", line 1019, in set
+    value = self.fire_replace_event(state, dict_, value, old, initiator)
+  File "C:\Users\Bevan\AppData\Local\Programs\Python\Python37\lib\site-packages\sqlalchemy\orm\attributes.py", line 1042, in fire_replace_event
+    state, value, previous, initiator or self._replace_token
+  File "C:\Users\Bevan\AppData\Local\Programs\Python\Python37\lib\site-packages\sqlalchemy\orm\attributes.py", line 1451, in emit_backref_from_scalar_set_event
+    instance_state(child),
+AttributeError: 'int' object has no attribute '_sa_instance_state'
+>>>

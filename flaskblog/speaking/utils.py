@@ -28,9 +28,6 @@ def Someaudio(form_audio):
             os.rename(f, new_name)
             return new_name
 
-        print(new_name)
-        print(file_name)
-
 
 count = 0
 
