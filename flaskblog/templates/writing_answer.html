@@ -1,0 +1,27 @@
+{% extends 'layout.html' %} {% block content %}
+{% if writing_answer.wcandidate == current_user %}
+<div class="row justify-content-center mt-3">
+    <div class="col-md-10">
+        <div class="card-group">
+            <div class="card mb-3">
+                <div class="card-header">
+                    <div class="text-md-left">
+                        {% autoescape false %} 
+                            {{writing_answer.task.replace('\n', '<br />')}}
+                        {% endautoescape %}
+                    </div>
+                    <div class="col-md-2 text-md-left">
+                        
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card md-2 mb-3">
+                    <h1>hi</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
+{% endblock content %}

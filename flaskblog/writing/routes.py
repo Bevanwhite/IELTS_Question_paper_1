@@ -96,6 +96,11 @@ def delete_writing(writing_id):
     return redirect(url_for('writing.write'))
 
 
-@writing.route("/writing/<int:writing_id>/result", methods=['POST', 'GET'])
-def result():
-    pass
+@writing.route("/writing/<int:writing_result_id>/result", methods=['POST', 'GET'])
+@login_required
+def result(writing_result_id):
+    writing_answer = Writingpaperanswer.query.get_or_404(writing_result_id)
+    if writing_answer.wcandidate != current_user:
+        abort(403)
+    else:
+        return render_template('writing_answer.html', title='Update', legend='Update', writing_answer=writing_answer)
