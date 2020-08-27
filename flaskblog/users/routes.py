@@ -46,17 +46,10 @@ def logout():
 @login_required
 def account():
     form = UpdateAccountForm()
-    writing_answer = Writingpaperanswer.query.filter_by(
-        user_id=current_user.id)
-    conn = sqlite3.connect(
-        'C:\\Users\\Bevan\\Desktop\\New folder (3)\\myflaskapp\\flaskblog\\site.db')
-    c = conn.cursor()
-    c.execute("""SELECT * FROM writingpaperanswer 
-                    WHERE user_id = :user_id """,
-              {'user_id': current_user.id})
-    bevs = c.fetchall()
-    print(bevs)
-    conn.close()
+    writinganswers = Writingpaperanswer.query.filter_by(
+        user_id=current_user.id).all()
+    print(type(writinganswers))
+    print(writinganswers[0].id)
     if form.validate_on_submit():
         if form.picture.data:
             picture_file = save_picture(form.picture.data)
@@ -75,7 +68,7 @@ def account():
         form.email.data = current_user.email
     image_file = url_for(
         'static', filename='profile_pics/' + current_user.image_file)
-    return render_template('account.html', title='Account', image_file=image_file, form=form, writing_answer=writing_answer, bevs=bevs)
+    return render_template('account.html', title='Account', image_file=image_file, form=form, writinganswers=writinganswers)
 
 
 @users.route("/reset_password", methods=['GET', 'POST'])

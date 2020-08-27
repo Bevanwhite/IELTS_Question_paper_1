@@ -18,7 +18,7 @@
       </div>
       <div
         id="collapseOne"
-        class="collapse show"
+        class="collapse"
         aria-labelledby="headingOne"
         data-parent="#accordionExample"
       >
@@ -125,7 +125,6 @@
           </div>
         </div>
       </div>
-      <div class="card">
         <div class="card-header" id="headingTwo">
           <h2 class="mb-0">
             <button
@@ -142,7 +141,7 @@
         </div>
         <div
           id="collapseTwo"
-          class="collapse"
+          class="collapse show"
           aria-labelledby="headingTwo"
           data-parent="#accordionExample"
         >
@@ -151,38 +150,37 @@
               <h1>Writing Papers</h1>
               <thead class="thead-dark">
                 <tr>
-                  <th scope="col">ID</th>
+                  <th scope="col">Exam ID</th>
+                  <th scope="col">Exam Paper id</th>
                   <th scope="col">Exam Type</th>
                   <th scope="col">Date and Time</th>
                   <th scope="col">Result</th>
                 </tr>
               </thead>
-              <tbody>
-                {% for bev in bevs.items %}
+              <tbody>       
+                {% for writinganswer in writinganswers %}
                 <tr>
-                  <th scope="row">1</th>
-                  <td>Mark</td>
-                  <td>Otto</td>
-                  <td>{{ bev[-1].user_id }}</td>
+                  <th scope="row">{{ writinganswer.id}}</th>
+                  <td>{{ writinganswer.pid}}</td>
+                  <td>{{ writinganswer.type}}</td>
+                  <td>{{ writinganswer.date_posted.strftime('%Y-%m-%d')}}</td>
+                  
+                  <td>
+                    <a
+                        type="button"
+                        class="btn btn-outline-primary btn-sm"
+                        href="{{ url_for('writing.result', writing_result_id= writinganswer.id )}}"
+                      >
+                        Result
+                      </a>
+                    </button>
+                  </td>
                 </tr>
                 {% endfor %}
-                <tr>
-                  <th scope="row">2</th>
-                  <td>Jacob</td>
-                  <td>Thornton</td>
-                  <td>@fat</td>
-                </tr>
-                <tr>
-                  <th scope="row">3</th>
-                  <td>Larry</td>
-                  <td>the Bird</td>
-                  <td>@twitter</td>
-                </tr>
               </tbody>
             </table>
           </div>
         </div>
-      </div>
     </div>
   </div>
   {% endblock content%}
