@@ -8,8 +8,8 @@ from flask_login import current_user
 import speech_recognition as sr
 import os
 import sqlite3
-from datetime import datetime
-from datetime import timedelta
+from datetime import datetime, timedelta
+
 
 speaking = Blueprint('speaking', __name__)
 
