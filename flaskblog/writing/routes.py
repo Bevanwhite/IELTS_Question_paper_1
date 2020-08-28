@@ -103,4 +103,6 @@ def result(writing_result_id):
     if writing_answer.wcandidate != current_user:
         abort(403)
     else:
-        return render_template('writing_answer.html', title='Update', legend='Update', writing_answer=writing_answer)
+        pic_file = url_for(
+            'static', filename='profile_pics/' + current_user.image_file)
+        return render_template('writing_answer.html', title='Update', legend='Update', writing_answer=writing_answer, pic_file=pic_file)
