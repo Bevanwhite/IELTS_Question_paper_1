@@ -11,9 +11,6 @@ class WritingpaperForm(FlaskForm):
     task01 = TextAreaField('Question 01', validators=[DataRequired()])
     task01_img = FileField('Question 01 img', validators=[
                            FileAllowed(['jpg', 'png'])])
-    task02 = TextAreaField('Question 02', validators=[DataRequired()])
-    task02_img = FileField('Question 02 img', validators=[
-                           FileAllowed(['jpg', 'png'])])
     submit = SubmitField('Save the Writing Paper')
 
     def validate_title(self, title):
@@ -29,17 +26,10 @@ class WritingUpdateForm(FlaskForm):
     task01 = TextAreaField('Question 01', validators=[DataRequired()])
     task01_img = FileField('Question 01 img', validators=[
                            FileAllowed(['jpg', 'png'])])
-    task02 = TextAreaField('Question 02', validators=[DataRequired()])
     submit = SubmitField('Save the Writing Paper')
 
 
 class WritingpaperoneForm(FlaskForm):
     task01_answer = TextAreaField(
         'Answer', validators=[DataRequired(), Length(min=150)])
-    submit = SubmitField('Save Your answer')
-
-
-class WritingpapertwoForm(FlaskForm):
-    task02_answer = TextAreaField(
-        'Answer', validators=[DataRequired(), Length(min=250)])
     submit = SubmitField('Save Your answer')

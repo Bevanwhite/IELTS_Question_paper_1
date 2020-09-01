@@ -64,7 +64,6 @@ class Writingpaper(db.Model):
     title = db.Column(db.String(300), unique=True, nullable=False)
     task01 = db.Column(db.String(1000), nullable=False)
     task01_img = db.Column(db.String(20), nullable=True)
-    task02 = db.Column(db.String(1000), nullable=False)
     date_posted = db.Column(db.DateTime, nullable=False,
                             default=datetime.now())
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
@@ -89,37 +88,6 @@ class Writingpaperanswer(db.Model):
         return f"Writingpaperanswer('{self.id}','{self.pid}')"
 
 
-class Mutlichoosequestion(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    question = db.Column(db.String(1000), nullable=False)
-    option1 = db.Column(db.String(1000), nullable=False)
-    option2 = db.Column(db.String(1000), nullable=False)
-    option3 = db.Column(db.String(1000), nullable=False)
-    option4 = db.Column(db.String(1000), nullable=False)
-    correctanswer = db.Column(db.String(1000), nullable=False)
-    date_posted = db.Column(db.DateTime, nullable=False,
-                            default=datetime.now())
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
-    answer = db.relationship(
-        'Mutlichooseanswer', backref='Mccandidate', lazy=True)
-
-    def __repr__(self):
-        return f"Mutlichoosequestion('{self.id}','{self.question}')"
-
-
-class Mutlichooseanswer(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    MCQ_id = db.Column(db.Integer, db.ForeignKey(
-        'mutlichoosequestion.id'), nullable=False)
-    option_selected = db.Column(db.String(1000), nullable=False)
-    date_posted = db.Column(db.DateTime, nullable=False,
-                            default=datetime.now())
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
-
-    def __repr__(self):
-        return f"Mutlichooseanswer('{self.id}','{self.option_selected}')"
-
-
 class Speaking(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(300), unique=True, nullable=False)
@@ -133,7 +101,23 @@ class Speaking(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
 
     def __repr__(self):
-        return f"Speak('{self.id}','{self.user_id}')"
+        return f"Speaking('{self.id}','{self.user_id}')"
+
+
+class Speakingquestion(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.String(300), unique=True, nullable=False)
+    question_01 = db.Column(db.String(500), nullable=False)
+    question_02 = db.Column(db.String(500), nullable=False)
+    question_03 = db.Column(db.String(500), nullable=False)
+    question_04 = db.Column(db.String(500), nullable=False)
+    question_05 = db.Column(db.String(500), nullable=False)
+    date_posted = db.Column(db.DateTime, nullable=False,
+                            default=datetime.now())
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+
+    def __repr__(self):
+        return f"Speakingquestion('{self.id}','{self.user_id}')"
 
 
 class Speakinganswer(db.Model):
