@@ -6,34 +6,48 @@
         <h5>IELTS Speaking Question Paper</h5>
       </div>
       <div class="card-body">
-      <form method="post" action="" enctype="multipart/form-data">
-        <h6>Question 01</h6>
-        <audio controls controlslist="nodownload">
-            <source src="{{url_for('static', filename='audio/' + speaking.question_01) }}" type="audio/mpeg">
-        </audio>
-          {{ form.record1(class="btn btn-primary btn-sm")}}
-          
-        <h6>Question 02</h6>
-        <audio controls controlslist="nodownload">
-            <source src="{{url_for('static', filename='audio/' + speaking.question_02) }}" type="audio/mpeg">
-        </audio>
+        <form method="post" action="" enctype="multipart/form-data">
+          <h6>Question 01</h6>
+          <audio controls controlslist="nodownload">
+            <source
+              src="{{url_for('static', filename='audio/' + speaking.question_01) }}"
+              type="audio/mpeg"
+            />
+          </audio>
+          {{form.record1(class="btn btn-primary btn-sm")}}
+          <h6>Question 02</h6>
+          <audio controls controlslist="nodownload">
+            <source
+              src="{{url_for('static', filename='audio/' + speaking.question_02) }}"
+              type="audio/mpeg"
+            />
+          </audio>
           {{ form.record2(class="btn btn-primary btn-sm")}}
-        <h6>Question 03</h6>
-        <audio controls controlslist="nodownload">
-            <source src="{{url_for('static', filename='audio/' + speaking.question_03) }}" type="audio/mpeg">
-        </audio>
+          <h6>Question 03</h6>
+          <audio controls controlslist="nodownload">
+            <source
+              src="{{url_for('static', filename='audio/' + speaking.question_03) }}"
+              type="audio/mpeg"
+            />
+          </audio>
           {{ form.record3(class="btn btn-primary btn-sm")}}
-        <h6>Question 04</h6>
-        <audio controls controlslist="nodownload">
-            <source src="{{url_for('static', filename='audio/' + speaking.question_04) }}" type="audio/mpeg">
-        </audio>
+          <h6>Question 04</h6>
+          <audio controls controlslist="nodownload">
+            <source
+              src="{{url_for('static', filename='audio/' + speaking.question_04) }}"
+              type="audio/mpeg"
+            />
+          </audio>
           {{ form.record4(class="btn btn-primary btn-sm")}}
-        <h6>Question 05</h6>
-        <audio controls controlslist="nodownload">
-            <source src="{{url_for('static', filename='audio/' + speaking.question_05) }}" type="audio/mpeg">
-        </audio>
+          <h6>Question 05</h6>
+          <audio controls controlslist="nodownload">
+            <source
+              src="{{url_for('static', filename='audio/' + speaking.question_05) }}"
+              type="audio/mpeg"
+            />
+          </audio>
           {{ form.record5(class="btn btn-primary btn-sm")}}
-          <br>
+          <br />
           {{ form.submit(class="btn btn-primary btn-sm")}}
         </form>
       </div>

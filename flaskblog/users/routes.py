@@ -1,7 +1,7 @@
 from flask import render_template, redirect, url_for, flash, request, Blueprint
 from flask_login import current_user, login_required, logout_user, login_required, login_user
 from flaskblog import db, bcrypt, app
-from flaskblog.models import User, Post, Writingpaperanswer
+from flaskblog.models import User, Post, Writingpaperanswer, Speakingquestion, Speakinganswersaved
 from flaskblog.users.forms import RegistrationForm, RequestResetForm, ResetPasswordForm, UpdateAccountForm, LoginForm
 from flaskblog.users.utils import save_picture, send_reset_email
 import sqlite3
@@ -48,8 +48,14 @@ def account():
     form = UpdateAccountForm()
     writinganswers = Writingpaperanswer.query.filter_by(
         user_id=current_user.id).all()
-    print(type(writinganswers))
-    print(writinganswers[0].id)
+    speakinganswersaves = Speakinganswersaved.query.filter_by(
+        user_id=current_user.id).all()
+    speakingquestions = Speakingquestion.query.filter_by(
+        user_id=current_user.id).all()
+    for writinganswer in writinganswers:
+        if writinganswer.user_id == current_user.id:
+            print(type(writinganswer))
+            print(writinganswer.id)
     if form.validate_on_submit():
         if form.picture.data:
             picture_file = save_picture(form.picture.data)
@@ -68,7 +74,7 @@ def account():
         form.email.data = current_user.email
     image_file = url_for(
         'static', filename='profile_pics/' + current_user.image_file)
-    return render_template('account.html', title='Account', image_file=image_file, form=form, writinganswers=writinganswers)
+    return render_template('account.html', title='Account', image_file=image_file, form=form, writinganswers=writinganswers, speakinganswersaves=speakinganswersaves, speakingquestions=speakingquestions)
 
 
 @users.route("/reset_password", methods=['GET', 'POST'])

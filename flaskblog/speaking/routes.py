@@ -1,9 +1,9 @@
-from flask import render_template, Blueprint, flash, redirect, url_for, request, jsonify
+from flask import render_template, Blueprint, flash, redirect, url_for, request, jsonify, abort
 from flask_login import login_required
 from flaskblog.speaking.forms import SpeakForm, RecodingForm
 from flaskblog.speaking.utils import Someaudio, record
 from flaskblog import db
-from flaskblog.models import Speaking, Speakinganswer, Speakinganswersaved
+from flaskblog.models import Speaking, Speakinganswer, Speakinganswersaved, Speakingquestion
 from flask_login import current_user
 import speech_recognition as sr
 import os
@@ -32,6 +32,9 @@ def new_speaking():
         que_05 = Someaudio(form.question_05.data)
         speak = Speaking(title=form.title.data, question_01=que_01, question_02=que_02,
                          question_03=que_03, question_04=que_04, question_05=que_05, vspeak=current_user)
+        speak01 = Speakingquestion(title=form.title.data, question_01=form.question_01.data, question_02=form.question_02.data,
+                                   question_03=form.question_03.data, question_04=form.question_04.data, question_05=form.question_05.data, speakquestion=current_user)
+        db.session.add(speak01)
         db.session.add(speak)
         db.session.commit()
         flash('Your Speaking Paper has been Created!', 'success')
@@ -44,7 +47,8 @@ def new_speaking():
 def show_speaking(speaking_id):
     speaking = Speaking.query.get_or_404(speaking_id)
     form = RecodingForm()
-
+    speakanswer = Speakinganswer.query.order_by(
+        Speakinganswer.date_posted.desc()).first()
     if form.is_submitted():
         speaks = Speakinganswer.query.all()
         speaking = Speaking.query.get_or_404(speaking_id)
@@ -235,14 +239,29 @@ def show_speaking(speaking_id):
             conn.close()
         speaks = Speakinganswer.query.all()
         if form.submit.data:
-            print(speaks[-1])
             if speaks[-1].answer01 != None and speaks[-1].answer02 != None and speaks[-1].answer03 != None and speaks[-1].answer04 != None and speaks[-1].answer05 != None:
                 speaksaved = Speakinganswersaved(
                     pid=speaking_id, answer01=speaks[-1].answer01, answer02=speaks[-1].answer02, answer03=speaks[-1].answer03, answer04=speaks[-1].answer04, answer05=speaks[-1].answer05, date_posted=datetime.now(), speakinganswersaved=current_user)
                 db.session.add(speaksaved)
                 db.session.commit()
+                return redirect(url_for('speaking.speak'))
             else:
                 flash(
                     'please submit all five answers and try to save the paper', 'danger')
         return render_template('speaking_paper.html',  speaking=speaking, form=form, speaks=speaks)
     return render_template('speaking_paper.html',  speaking=speaking, form=form)
+
+
+@speaking.route("/speaking/<int:speaking_id>/result", methods=['POST', 'GET'])
+@login_required
+def result(speaking_id):
+    speaking_answer = Speakingquestion.query.get_or_404(speaking_id)
+    speaking_ans = Speakinganswersaved.query.get_or_404(speaking_id)
+    print(speaking_answer)
+    if speaking_answer.speakquestion != current_user:
+        abort(403)
+    else:
+        spic_file = url_for(
+            'static', filename='profile_pics/' + current_user.image_file)
+        return render_template('speaking_anwser.html', title='Update',
+                               legend='Update', speaking_answer=speaking_answer, spic_file=spic_file, speaking_ans=speaking_ans)

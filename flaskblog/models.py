@@ -27,6 +27,8 @@ class User(db.Model, UserMixin):
         'Speaking', backref='vspeak', lazy=True)
     speakinganswer = db.relationship(
         'Speakinganswer', backref='speakanswer', lazy=True)
+    speakingquestion = db.relationship(
+        'Speakingquestion', backref='speakquestion', lazy=True)
     Speakinganswersav = db.relationship(
         'Speakinganswersaved', backref='speakinganswersaved', lazy=True)
 
