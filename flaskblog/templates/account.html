@@ -188,8 +188,8 @@
               <thead class="thead-dark">
                 <tr>
                   <th scope="col">Exam ID</th>
+                  <th scope="col">Exam Paper ID</th>
                   <th scope="col">Exam title</th>
-                  <th scope="col">Exam Type</th>
                   <th scope="col">Date and Time</th>
                   <th scope="col">Result</th>
                 </tr>
@@ -199,8 +199,8 @@
                   {% if speakinganswersave.user_id == current_user.id %}
                 <tr>
                   <th scope="row">{{ speakinganswersave.id}}</th>
-                  <td>{{ speakinganswersave.speakinganswersaved.title}}</td>
-                  <td>{{ speakinganswersave.type}}</td>
+                  <td>{{ speakinganswersave.speaker.id}}</td>
+                  <td>{{ speakinganswersave.speaker.title}}</td>
                   <td>{{ speakinganswersave.date_posted.strftime("%Y-%m-%d -- %H:%M:%S")}}</td>
                   
                   <td>
