@@ -125,101 +125,103 @@
           </div>
         </div>
       </div>
-        <div class="card-header" id="headingTwo">
-          <h2 class="mb-0">
-            <button
-              class="btn btn-link btn-block text-left collapsed"
-              type="button"
-              data-toggle="collapse"
-              data-target="#collapseTwo"
-              aria-expanded="false"
-              aria-controls="collapseTwo"
-            >
-              Check Your Previous Exam Marks in all IELTS Exams In This Website
-            </button>
-          </h2>
+      <div class="card-header" id="headingTwo">
+        <h2 class="mb-0">
+          <button
+            class="btn btn-link btn-block text-left collapsed"
+            type="button"
+            data-toggle="collapse"
+            data-target="#collapseTwo"
+            aria-expanded="false"
+            aria-controls="collapseTwo"
+          >
+            Check Your Previous Exam Marks in all IELTS Exams In This Website
+          </button>
+        </h2>
+      </div>
+      <div
+        id="collapseTwo"
+        class="collapse show"
+        aria-labelledby="headingTwo"
+        data-parent="#accordionExample"
+      >
+        <div class="card-body">
+          <table class="table">
+            <h1>Writing Papers</h1>
+            <thead class="thead-dark">
+              <tr>
+                <th scope="col">Exam ID</th>
+                <th scope="col">Exam title</th>
+                <th scope="col">Exam Type</th>
+                <th scope="col">Date and Time</th>
+                <th scope="col">Result</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for writinganswer in writinganswers %} {% if
+              writinganswer.user_id == current_user.id %}
+              <tr>
+                <th scope="row">{{ writinganswer.id}}</th>
+                <td>{{ writinganswer.candidate.title}}</td>
+                <td>{{ writinganswer.type}}</td>
+                <td>
+                  {{ writinganswer.date_posted.strftime("%Y-%m-%d --
+                  %H:%M:%S")}}
+                </td>
+
+                <td>
+                  <a
+                    type="button"
+                    class="btn btn-outline-primary btn-sm"
+                    href="{{ url_for('writing.result', writing_result_id= writinganswer.id )}}"
+                  >
+                    Result
+                  </a>
+                </td>
+              </tr>
+              {% endif %} {% endfor %}
+            </tbody>
+          </table>
         </div>
-        <div
-          id="collapseTwo"
-          class="collapse show"
-          aria-labelledby="headingTwo"
-          data-parent="#accordionExample"
-        >
-          <div class="card-body">
-            <table class="table">
-              <h1>Writing Papers</h1>
-              <thead class="thead-dark">
-                <tr>
-                  <th scope="col">Exam ID</th>
-                  <th scope="col">Exam title</th>
-                  <th scope="col">Exam Type</th>
-                  <th scope="col">Date and Time</th>
-                  <th scope="col">Result</th>
-                </tr>
-              </thead>
-              <tbody>       
-                {% for writinganswer in writinganswers %}
-                  {% if writinganswer.user_id == current_user.id %}
-                <tr>
-                  <th scope="row">{{ writinganswer.id}}</th>
-                  <td>{{ writinganswer.candidate.title}}</td>
-                  <td>{{ writinganswer.type}}</td>
-                  <td>{{ writinganswer.date_posted.strftime("%Y-%m-%d -- %H:%M:%S")}}</td>
-                  
-                  <td>
-                    <a
-                        type="button"
-                        class="btn btn-outline-primary btn-sm"
-                        href="{{ url_for('writing.result', writing_result_id= writinganswer.id )}}"
-                      >
-                        Result
-                      </a>
-                    </button>
-                  </td>
-                </tr>
-                {% endif %}
-                {% endfor %}
-              </tbody>
-            </table>
-          </div>
-          <div class="card-body">
-            <table class="table">
-              <h1>Speaking Papers</h1>
-              <thead class="thead-dark">
-                <tr>
-                  <th scope="col">Exam ID</th>
-                  <th scope="col">Exam Paper ID</th>
-                  <th scope="col">Exam title</th>
-                  <th scope="col">Date and Time</th>
-                  <th scope="col">Result</th>
-                </tr>
-              </thead>
-              <tbody>       
-                {% for speakinganswersave in speakinganswersaves %}
-                  {% if speakinganswersave.user_id == current_user.id %}
-                <tr>
-                  <th scope="row">{{ speakinganswersave.id}}</th>
-                  <td>{{ speakinganswersave.speaker.id}}</td>
-                  <td>{{ speakinganswersave.speaker.title}}</td>
-                  <td>{{ speakinganswersave.date_posted.strftime("%Y-%m-%d -- %H:%M:%S")}}</td>
-                  
-                  <td>
-                    <a
-                        type="button"
-                        class="btn btn-outline-primary btn-sm"
-                        href="{{ url_for('speaking.result', speaking_id= speakinganswersave.id )}}"
-                      >
-                        Result
-                      </a>
-                    </button>
-                  </td>
-                </tr>
-                {% endif %}
-                {% endfor %}
-              </tbody>
-            </table>
-          </div>
+        <div class="card-body">
+          <table class="table">
+            <h1>Speaking Papers</h1>
+            <thead class="thead-dark">
+              <tr>
+                <th scope="col">Exam ID</th>
+                <th scope="col">Exam Paper ID</th>
+                <th scope="col">Exam title</th>
+                <th scope="col">Date and Time</th>
+                <th scope="col">Result</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for speakinganswersave in speakinganswersaves %} {% if
+              speakinganswersave.user_id == current_user.id %}
+              <tr>
+                <th scope="row">{{ speakinganswersave.id}}</th>
+                <td>{{ speakinganswersave.speaker.id}}</td>
+                <td>{{ speakinganswersave.speaker.title}}</td>
+                <td>
+                  {{ speakinganswersave.date_posted.strftime("%Y-%m-%d --
+                  %H:%M:%S")}}
+                </td>
+
+                <td>
+                  <a
+                    type="button"
+                    class="btn btn-outline-primary btn-sm"
+                    href="{{ url_for('speaking.result', speaking_id= speakinganswersave.id )}}"
+                  >
+                    Result
+                  </a>
+                </td>
+              </tr>
+              {% endif %} {% endfor %}
+            </tbody>
+          </table>
         </div>
+      </div>
     </div>
   </div>
   {% endblock content%}
