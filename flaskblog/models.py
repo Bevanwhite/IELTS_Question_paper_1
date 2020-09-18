@@ -84,6 +84,8 @@ class Writingpaperanswer(db.Model):
     type = db.Column(db.String(200), nullable=False)
     date_posted = db.Column(db.DateTime, nullable=False,
                             default=datetime.now())
+    grammar = db.Column(db.Integer, nullable=False)
+    cohesion = db.Column(db.Integer, nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
 
     def __repr__(self):
@@ -144,10 +146,20 @@ class Speakinganswersaved(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     pid = db.Column(db.Integer, db.ForeignKey('speaking.id'), nullable=True)
     answer01 = db.Column(db.String(500), nullable=True)
+    cohesion_01 = db.Column(db.Integer, nullable=False)
+    grammmar_01 = db.Column(db.Integer, nullable=False)
     answer02 = db.Column(db.String(500), nullable=True)
+    cohesion_02 = db.Column(db.Integer, nullable=False)
+    grammmar_02 = db.Column(db.Integer, nullable=False)
     answer03 = db.Column(db.String(500), nullable=True)
+    cohesion_03 = db.Column(db.Integer, nullable=False)
+    grammmar_03 = db.Column(db.Integer, nullable=False)
     answer04 = db.Column(db.String(500), nullable=True)
+    cohesion_04 = db.Column(db.Integer, nullable=False)
+    grammmar_04 = db.Column(db.Integer, nullable=False)
     answer05 = db.Column(db.String(500), nullable=True)
+    cohesion_05 = db.Column(db.Integer, nullable=False)
+    grammmar_05 = db.Column(db.Integer, nullable=False)
     date_posted = db.Column(db.DateTime, nullable=False,
                             default=datetime.now())
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)

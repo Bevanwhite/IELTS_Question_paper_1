@@ -3,7 +3,7 @@ from flask_login import login_user, login_required, current_user
 from flaskblog import db
 from flaskblog.models import Writingpaper, Writingpaperanswer
 from flaskblog.writing.forms import WritingpaperForm, WritingUpdateForm, WritingpaperoneForm
-from flaskblog.writing.utils import paper_picture
+from flaskblog.writing.utils import paper_picture, get_grammar_result, get_cohesion_result
 
 
 writing = Blueprint('writing', __name__)
@@ -41,8 +41,10 @@ def show_writing(writing_id):
     writingpaper = Writingpaper.query.get_or_404(writing_id)
     form1 = WritingpaperoneForm()
     if form1.validate_on_submit():
+        grammar_01 = get_grammar_result(form1.task01_answer.data)
+        cohesion_01 = get_cohesion_result(form1.task01_answer.data)
         writing = Writingpaperanswer(pid=writing_id, task=form1.task01_answer.data,
-                                     type="type1", wcandidate=current_user)
+                                     type="type1", grammar=grammar_01, cohesion=cohesion_01, wcandidate=current_user)
         db.session.add(writing)
         db.session.commit()
         flash(

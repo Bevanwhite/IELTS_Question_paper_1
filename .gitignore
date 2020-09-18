@@ -6,3 +6,7 @@ cohesion.py
 try_outs
 New folder
 myflaskapp.zip
+Cohesion LSTM V2.h5
+GoogleNews-vectors-negative300.magnitude
+LSTM-score.h5
+word2vecmodel.bin

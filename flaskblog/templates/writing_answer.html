@@ -11,36 +11,44 @@
             {% endautoescape %}
           </div>
         </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card md-2 mb-1">
+          <div class="card-header">User Details</div>
+          <div class="media justify-content-center">
+            <img
+              class="rounded-circle mt-2"
+              src="{{ pic_file }}"
+              alt="Card image cap"
+            />
+          </div>
+          <div class="card-body">
+            <p class="card-text">
+              Exam Paper ID: <br />{{ writing_answer.candidate.id }}
+            </p>
+            <p class="card-text">
+              Exam Paper Name:<br />{{ writing_answer.candidate.title }}
+            </p>
+            <p class="card-text">
+              Date Submitted:
+              <br />{{writing_answer.date_posted.strftime("%Y-%m-%d %H:%M:%S")}}
+            </p>
+
+            <p class="card-text">User index: <br />{{ writing_answer.id }}</p>
+            <p class="card-text">User Name: <br />{{ current_user.username}}</p>
+            <p class="card-text">Email: <br />{{ current_user.email}}</p>
+          </div>
         </div>
-        <div class="col-md-4">
+        <div class="col-md-13">
           <div class="card md-2 mb-1">
-            <div class="card-header">User Details</div>
-            <div class="media justify-content-center">
-                  <img
-                    class="rounded-circle mt-2"
-                    src="{{ pic_file }}"
-                    alt="Card image cap"
-                  />
-                </div>
+            <div class="card-header">Grammar and Cohesion Result</div>
             <div class="card-body">
-                <p class="card-text">
-                Exam Paper ID: <br />{{ writing_answer.candidate.id }}
-                </p>
-                <p class="card-text">
-                Exam Paper Name:<br />{{ writing_answer.candidate.title }}
-                </p>
-                <p class="card-text">
-                Date Submitted:
-                <br />{{writing_answer.date_posted.strftime("%Y-%m-%d    %H:%M:%S")}}
-                </p>
-                
-                <p class="card-text">
-                    User index: <br />{{ writing_answer.id }}
-                </p>
-                <p class="card-text">
-                    User Name: <br />{{ current_user.username}}
-                </p>
-                <p class="card-text">Email: <br />{{ current_user.email}}</p>
+              <p class="card-text">
+                Grammar: <br />{{ writing_answer.grammar }}
+              </p>
+              <p class="card-text">
+                Cohesion: <br />{{ writing_answer.cohesion }}
+              </p>
             </div>
           </div>
         </div>
